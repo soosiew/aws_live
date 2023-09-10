@@ -113,7 +113,7 @@ def login_company():
 @app.route('/manage_company_profile')
 def manage_company_profile():
     currentCompany = str(session['logedInCompany'])
-    select_sql = "SELECT * FROM employee WHERE emp_id = %s"
+    select_sql = "SELECT * FROM comp WHERE companyId = %s"
     cursor = db_conn.cursor()
 
     try:
@@ -132,7 +132,7 @@ def manage_company_profile():
 
     except Exception as e:
         return str(e)
-    
+
     finally:
         cursor.close()
     
