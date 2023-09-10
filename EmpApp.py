@@ -94,7 +94,7 @@ def manage_company_profile():
             # print(response)
             # image_data = response['Body'].read()
 
-            print(response['Body'].read())
+            print(str(response['Body'].read()))
             return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=Response(image_data, content_type=response['ContentType']), compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
             
         except Exception as e:
