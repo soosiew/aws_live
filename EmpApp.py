@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, Response
 from pymysql import connections
 import os
 import boto3
@@ -140,7 +140,8 @@ def manage_company_profile():
                                                          'Key': comp_image_file_name_in_s3},
                                                  ExpiresIn=3600)  # Adjust the expiration time as needed
             print(response)
-            return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
+            image_data = response['Body'].read()
+            return render_template('EditCompanyProfile.html',compName=Response(image_data, content_type=response['ContentType']), compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
             
         except Exception as e:
             return str(e)
