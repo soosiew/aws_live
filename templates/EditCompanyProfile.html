@@ -56,7 +56,7 @@
 							</td>
 							<td>
 								<textarea class="inputText" type="text" name="company_name" autofocus size="40"
-									placeholder="Enter company name">{{ current_company_name }}</textarea>
+									placeholder="Enter company name">{{ compName }}</textarea>
 							</td>
 						</tr>
 
@@ -65,7 +65,8 @@
 								<label class="label">Company Logo</label>
 							</td>
 							<td>
-								<input class="uploadCompLogo" type=file name="company_image_file">
+								<img class="company-logo" id="company-logo" src="{{ compLogo }}" alt="Company Logo">
+								<input class="uploadCompLogo" type=file name="company_image_file"></input> 
 							</td>
 						</tr>
 
