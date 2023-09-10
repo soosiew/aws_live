@@ -62,54 +62,6 @@ def companyViewManageJob():
 def login_company():
     return render_template('LoginCompany.html')
 
-# @app.route('/manage_company_profile')
-# def manage_company_profile():
-#     currentCompany = session['logedInCompany']
-#     select_sql = "SELECT * FROM employee WHERE emp_id = %s"
-#     cursor = db_conn.cursor()
-
-#     try:
-#         cursor.execute(select_sql, (currentCompany,))
-#         company = cursor.fetchone()
-
-#         if not company:
-#             print("company not found")
-
-#         comp_name = company[2]
-#         comp_about = company[3]
-#         print(comp_about) 
-#         comp_address = company[4]
-#         comp_email = company[5]
-#         comp_phone = company[6] 
-
-             
-
-        # Fetch the S3 image URL based on emp_id
-        # emp_image_file_name_in_s3 = "comp-id-" + str(currentCompany) + "_image_file"
-        # s3 = boto3.client('s3')
-        # bucket_name = custombucket
-
-        # try:
-        #     response = s3.generate_presigned_url('get_object',
-        #                                          Params={'Bucket': bucket_name,
-        #                                                  'Key': comp_image_file_name_in_s3},
-        #                                          ExpiresIn=3600)  # Adjust the expiration time as needed
-            
-            
-
-        #     return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
-
-        # except Exception as e:
-        #     return str(e)
-
-    # except Exception as e:
-    #     return str(e)
-
-    # finally:
-    #     cursor.close()
-    #     return render_template('EditCompanyProfile.html',compName=comp_name, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)   
-
-
 @app.route('/manage_company_profile')
 def manage_company_profile():
     currentCompany = str(session['logedInCompany'])
@@ -139,10 +91,10 @@ def manage_company_profile():
                                                  Params={'Bucket': bucket_name,
                                                          'Key': comp_image_file_name_in_s3},
                                                  ExpiresIn=3600)  # Adjust the expiration time as needed
-            print(response)
-            image_data = response['Body'].read()
+            # print(response)
+            # image_data = response['Body'].read()
 
-            print(image_data)
+            print(response['Body'].read())
             return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=Response(image_data, content_type=response['ContentType']), compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
             
         except Exception as e:
