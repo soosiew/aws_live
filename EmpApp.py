@@ -165,7 +165,7 @@ def addJob():
         try:
             cursor.execute(insert_sql, (job_id, publish_date, job_type, job_position, job_description, job_requirement, job_location, job_salary, job_openings, company, job_industry,))
             db_conn.commit()
-            print("hihi")    
+               
         except Exception as e:
                 print(str(e))
     finally:
