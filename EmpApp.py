@@ -74,12 +74,14 @@ def manage_company_profile():
 
         if not company:
             print("company not found")
-        
+
         comp_name = company[2]
         comp_about = company[3]
         comp_address = company[4]
         comp_email = company[5]
-        comp_phone = company[6]       
+        comp_phone = company[6] 
+
+        print(comp_email)      
 
         # Fetch the S3 image URL based on emp_id
         # emp_image_file_name_in_s3 = "comp-id-" + str(currentCompany) + "_image_file"
