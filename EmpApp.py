@@ -115,15 +115,13 @@ def loginCompany():
 
         select_sql = "SELECT * FROM company WHERE email = %s AND password = %s"
         cursor = db_conn.cursor()
-        print(password)
 
         try:
             cursor.execute(select_sql, (email,password,))
             company = cursor.fetchone()
 
             if company:  
-                session['response'] = str(company[0])
-                print(str(session['response']))
+                session['logedInCompany'] = str(company[0])
                 return render_template('ViewCompanyApplication.html')
             
         except Exception as e:
