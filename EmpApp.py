@@ -106,7 +106,30 @@ def addCompanyRegistration():
         return render_template('home.html')
 
 
+@app.route("/loginCompany", methods=['GET','POST'])
+def LoginLec():
+    if request.method == 'POST':
+        email = request.form['company_email']
+        password = request.form['password']
 
+        select_sql = "SELECT * FROM lecturer WHERE email = %s AND password = %s"
+        cursor = db_conn.cursor()
+
+        try:
+            cursor.execute(select_sql, (email,password,))
+            lecturer = cursor.fetchone()
+
+            if lecturer:
+                msg = lecturer[0] + lecturer[1] + lecturer[2]
+                return render_template('ViewCompanyApplication.html', msg=msg)
+            
+        except Exception as e:
+            return str(e)
+
+        finally:   
+            cursor.close()
+        
+    return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password")
 
 
 
