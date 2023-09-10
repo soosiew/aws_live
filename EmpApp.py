@@ -162,17 +162,14 @@ def addJob():
         cursor = db_conn.cursor()
         
         try:
-            cursor.execute(insert_sql, (int(job_id), publish_date, job_type, job_position, job_description, job_requirement, job_location, job_salary, job_openings, int(job_industry), int(company)))
+            cursor.execute(insert_sql, (int(job_id), publish_date, job_type, job_position, job_description, job_requirement, job_location, job_salary, job_openings, int(job_industry), int(company),))
             db_conn.commit()    
         except Exception as e:
                 return str(e)   
-        finally:
-                cursor.close()
-                print("Job published...")
-                return render_template('ViewCompanyApplication.html')
-        
-    except Exception as e:
-        return str(e)  
+    finally:
+        cursor.close()
+        print("Job published...")
+        return render_template('ViewCompanyApplication.html')
     
 
 
