@@ -122,7 +122,7 @@ def manage_company_profile():
 
         if not company:
             print("company not found")
-        
+
         print("Company tuple:", company)
         comp_name = company[2]
         comp_about = company[3]
@@ -130,13 +130,30 @@ def manage_company_profile():
         comp_email = company[5]
         comp_phone = company[6] 
 
+        # Fetch the S3 image URL based on comp_id
+        comp_image_file_name_in_s3 = "comp-id-" + str(currentCompany) + "_image_file"
+        s3 = boto3.client('s3')
+        bucket_name = custombucket
+
+        try:
+            response = s3.generate_presigned_url('get_object',
+                                                 Params={'Bucket': bucket_name,
+                                                         'Key': comp_image_file_name_in_s3},
+                                                 ExpiresIn=3600)  # Adjust the expiration time as needed
+            
+            
+
+            return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
+            
+        except Exception as e:
+            return str(e)
+
     except Exception as e:
         return str(e)
 
     finally:
         cursor.close()
-    
-    return render_template('EditCompanyProfile.html', compName=comp_name, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
+        return render_template('EditCompanyProfile.html', compName=comp_name, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
 
 @app.route('/login_admin')
 def login_admin():
