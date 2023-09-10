@@ -99,7 +99,7 @@ def addCompanyRegistration():
             cursor.close()
 
         print("Company registration request submitted...")
-        return render_template('EditCompanyProfile.html')
+        return render_template('home.html')
     
     except Exception as e:
         print(str(e))
