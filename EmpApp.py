@@ -88,12 +88,16 @@ def manage_company_profile():
         bucket_name = custombucket
 
         try:
-            response = s3.generate_presigned_url('get_object',
-                                                 Params={'Bucket': bucket_name,
-                                                         'Key': comp_image_file_name_in_s3},
-                                                 ExpiresIn=3600)  # Adjust the expiration time as needed
+            # response = s3.generate_presigned_url('get_object',
+            #                                      Params={'Bucket': bucket_name,
+            #                                              'Key': comp_image_file_name_in_s3},
+            #                                      ExpiresIn=3600)  # Adjust the expiration time as needed
             
-            return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
+            response = s3.get_object(Bucket=bucket_name, Key=comp_image_file_name_in_s3)
+            image_data = response['Body'].read()
+            image_data_base64 = base64.b64encode(image_data).decode('utf-8')
+
+            return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=image_data_base64, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
             
         except Exception as e:
             print(str(e))
