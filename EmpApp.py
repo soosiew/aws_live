@@ -132,7 +132,7 @@ def manage_company_profile():
 
     except Exception as e:
         return str(e)
-
+    
     finally:
         cursor.close()
     
