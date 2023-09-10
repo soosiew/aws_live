@@ -156,14 +156,14 @@ def addJob():
         job_salary = request.form['job_salary']
         job_openings = request.form['job_openings']       
         job_industry = request.form['job_industry']
-        company = id        
+        company = int(id)      
 
         insert_sql = "INSERT INTO job VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         cursor = db_conn.cursor()
         print("get industry : " + job_industry)
 
         try:
-            cursor.execute(insert_sql, (job_id, publish_date, job_type, job_position, job_description, job_requirement, job_location, job_salary, job_openings, int(company), job_industry,))
+            cursor.execute(insert_sql, (job_id, publish_date, job_type, job_position, job_description, job_requirement, job_location, job_salary, job_openings, company, job_industry,))
             db_conn.commit()    
         except Exception as e:
                 print(str(e))
