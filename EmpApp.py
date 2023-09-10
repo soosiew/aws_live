@@ -33,6 +33,14 @@ def logoutCompany():
     else:  
         return render_template('home.html'); 
 
+@app.route('/logoutAdmin')
+def logoutAdmin():  
+    if 'id' in session:  
+        session.pop('logedInAdmin',None)  
+        return render_template('home.html');  
+    else:  
+        return render_template('home.html');
+
 @app.route('/register_company')
 def register_company():
     return render_template('RegisterCompany.html')
@@ -148,7 +156,8 @@ def loginAdmin():
 
         if admin_id != "Admin001" or password != "12345678":
             return render_template('LoginAdmin.html')
-        return render_template('AdminDashboard.html', id=admin_id)
+        session['logedInAdmin'] = str(admin_id)
+        return render_template('AdminDashboard.html', id=session['logedInAdmin'])
 
 
 
