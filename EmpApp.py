@@ -156,7 +156,7 @@ def addJob():
         job_salary = request.form['job_salary']
         job_openings = request.form['job_openings']       
         job_industry = request.form['job_industry']
-        company = int(id)      
+        company = int(str(id))      
 
         insert_sql = "INSERT INTO job VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         print("get industry : " + job_industry)
@@ -172,7 +172,7 @@ def addJob():
 
     except Exception as e:
                 print(str(e))
-                
+
     finally:
         cursor.close()
         print("Job published...")
