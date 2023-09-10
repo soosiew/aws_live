@@ -69,7 +69,7 @@ def manage_company_profile():
 
 
     
-    return render_template('EditCompanyProfile.html', company_name = companyName)
+    return render_template('EditCompanyProfile.html', current_company_name = companyName)
 
 @app.route('/login_admin')
 def login_admin():
