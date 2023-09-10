@@ -25,6 +25,14 @@ table = 'employee'
 def index():
     return render_template('home.html', number=1)
 
+@app.route('/logoutCompany')
+def logoutCompany():  
+    if 'id' in session:  
+        session.pop('logedInCompany',None)  
+        return render_template('home.html');  
+    else:  
+        return render_template('home.html'); 
+
 @app.route('/register_company')
 def register_company():
     return render_template('RegisterCompany.html')
