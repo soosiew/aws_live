@@ -144,8 +144,7 @@ def loginCompany():
 def loginAdmin():
     admin_id = request.form.get('admin_ID')
     password = request.form.get('password')
-    print(password)
-    
+
     if admin_id != "Admin001" or password != "12345678":
         return render_template('LoginAdmin.html')
     return render_template('AdminDashboard.html', id=admin_id)
