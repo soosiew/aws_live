@@ -58,7 +58,7 @@ def addCompanyRegistration():
         # Close the cursor
         cursor.close()
 
-        company_id = ((int)result[0] + 1)
+        (int)company_id = ((int)result[0] + 1)
         company_name = request.form['company_name']
         company_image_file = request.files['company_image_file']
         about_company = request.form['about_company']
