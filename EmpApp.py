@@ -156,7 +156,7 @@ def addJob():
         job_salary = request.form['job_salary']
         job_openings = request.form['job_openings']       
         job_industry = request.form['job_industry']
-        company = int('id')
+        company = 'id'
 
         insert_sql = "INSERT INTO job VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         cursor = db_conn.cursor()
