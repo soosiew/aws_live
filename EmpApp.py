@@ -53,7 +53,7 @@ def addCompanyRegistration():
         print(result)
         
         # Get the total row count from the result
-        total_count = result[total]
+        total_count = result['total']
         print("total in company - " + total_count)
         
         # Close the cursor
