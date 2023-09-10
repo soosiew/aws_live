@@ -97,7 +97,7 @@ def manage_company_profile():
             print(response)
             image_data = response['Body'].read()
             image_data_base64 = base64.b64encode(image_data).decode('utf-8')
-            
+            print(image_data_base64)
             return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=image_data_base64, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
             
         except Exception as e:
