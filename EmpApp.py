@@ -169,7 +169,7 @@ def addJob():
         finally:
                 cursor.close()
                 print("Job published...")
-                return render_template('viewCompanyApplication.html')
+                return render_template('ViewCompanyApplication.html')
         
     except Exception as e:
         return str(e)  
