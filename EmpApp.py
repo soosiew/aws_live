@@ -98,10 +98,10 @@ def manage_company_profile():
             return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=Response(image_data, content_type=response['ContentType']), compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
             
         except Exception as e:
-            return str(e)
+            print(str(e))
 
     except Exception as e:
-        return str(e)
+        print(str(e))
 
     finally:
         cursor.close()
