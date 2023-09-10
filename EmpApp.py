@@ -45,18 +45,15 @@ def addCompanyRegistration():
     try:
         # Create a cursor
         cursor = db_conn.cursor()
-        print("til cursor")
         
         # Execute the SELECT COUNT(*) query to get the total row count
-        select_sql = "SELECT COUNT(*) as total FROM company"
-        print("til sql")
+        select_sql = "SELECT COUNT(*) as total FROM company"      
         cursor.execute(select_sql)
-        print("til execute")
         result = cursor.fetchone()
-        print("til result")
+        print(result)
         
         # Get the total row count from the result
-        total_count = result[0]
+        total_count = result[total]
         print("total in company - " + total_count)
         
         # Close the cursor
