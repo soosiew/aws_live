@@ -74,11 +74,11 @@ def addCompanyRegistration():
             return "Please select a file"
         
         try:
-                cursor.execute(insert_sql, (int(result[0]), password, company_name, about_company, company_address, company_email, company_phone, ""))
+                cursor.execute(insert_sql, (result[0], password, company_name, about_company, company_address, company_email, company_phone, "",))
                 db_conn.commit()
                 
                 # Uplaod image file in S3 #
-                comp_image_file_name_in_s3 = "comp-id-" + str(company_id) + "_image_file"
+                comp_image_file_name_in_s3 = "comp-id-" + str(result[0]) + "_image_file"
                 s3 = boto3.resource('s3')
 
                 try:
