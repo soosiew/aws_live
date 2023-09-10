@@ -74,6 +74,7 @@ def addCompanyRegistration():
             return "Please select a file"
         
         try:
+                print(result[0])
                 cursor.execute(insert_sql, (1, password, company_name, about_company, company_address, company_email, company_phone, "pending",))
                 db_conn.commit()
                 
