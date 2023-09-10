@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session
 from pymysql import connections
 import os
 import boto3
+import datetime
 from config import *
 
 app = Flask(__name__)
@@ -125,6 +126,48 @@ def addCompanyRegistration():
         print(str(e))
         print("failed get count...")
         return render_template('home.html')
+    
+@app.route("/addJob", methods=['POST'])
+def addJob():
+    try:
+        # Create a cursor
+        cursor = db_conn.cursor()
+        
+        # Execute the SELECT COUNT(*) query to get the total row count
+        select_sql = "SELECT COUNT(*) as total FROM job"      
+        cursor.execute(select_sql)
+        result = cursor.fetchone()
+        
+        cursor.close()
+        current_datetime = datetime.datetime.now()
+
+        # Format the date as a string (e.g., "2023-09-09 10:15:30")
+        job_id = int(result[0]) + 1
+        publish_date = current_datetime.strftime('%Y-%m-%d %H:%M:%S')       
+        job_type = request.form['job_type']
+        job_position = request.form['job_position']
+        job_description = request.form['job_description']
+        job_requirement = request.form['job_requirement']
+        job_location = request.form['job_location']
+        job_salary = request.form['job_salary']
+        job_openings = request.form['job_openings']       
+        job_industry = request.form['job_industry']
+        company = id        
+
+        insert_sql = "INSERT INTO job VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor = db_conn.cursor()
+        
+        try:
+                cursor.execute(insert_sql, (int(job_id), publish_date, job_type, job_position, job_description, job_requirement, job_location, job_salary, job_openings, int(job_industry), int(company)))
+                db_conn.commit()        
+        finally:
+            cursor.close()
+            print("Job published...")
+            return render_template('viewCompanyApplication.html')
+    
+    except Exception as e:
+        print(str(e))
+        return render_template('PublishJob.html')
 
 
 @app.route("/loginCompany", methods=['GET','POST'])
@@ -162,6 +205,49 @@ def loginAdmin():
             return render_template('LoginAdmin.html')
         session['logedInAdmin'] = str(admin_id)
         return render_template('AdminDashboard.html', id=session['logedInAdmin'])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
