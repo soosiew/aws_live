@@ -5,6 +5,7 @@ import boto3
 from config import *
 
 app = Flask(__name__)
+app.secret_key = "CC"
 
 bucket = custombucket
 region = customregion
