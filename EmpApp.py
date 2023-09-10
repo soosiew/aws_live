@@ -62,25 +62,25 @@ def companyViewManageJob():
 def login_company():
     return render_template('LoginCompany.html')
 
-@app.route('/manage_company_profile')
-def manage_company_profile():
-    currentCompany = session['logedInCompany']
-    select_sql = "SELECT * FROM employee WHERE emp_id = %s"
-    cursor = db_conn.cursor()
+# @app.route('/manage_company_profile')
+# def manage_company_profile():
+#     currentCompany = session['logedInCompany']
+#     select_sql = "SELECT * FROM employee WHERE emp_id = %s"
+#     cursor = db_conn.cursor()
 
-    try:
-        cursor.execute(select_sql, (currentCompany,))
-        company = cursor.fetchone()
+#     try:
+#         cursor.execute(select_sql, (currentCompany,))
+#         company = cursor.fetchone()
 
-        if not company:
-            print("company not found")
+#         if not company:
+#             print("company not found")
 
-        comp_name = company[2]
-        comp_about = company[3]
-        print(comp_about) 
-        comp_address = company[4]
-        comp_email = company[5]
-        comp_phone = company[6] 
+#         comp_name = company[2]
+#         comp_about = company[3]
+#         print(comp_about) 
+#         comp_address = company[4]
+#         comp_email = company[5]
+#         comp_phone = company[6] 
 
              
 
@@ -102,13 +102,40 @@ def manage_company_profile():
         # except Exception as e:
         #     return str(e)
 
+    # except Exception as e:
+    #     return str(e)
+
+    # finally:
+    #     cursor.close()
+    #     return render_template('EditCompanyProfile.html',compName=comp_name, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)   
+
+
+@app.route('/manage_company_profile')
+def manage_company_profile():
+    currentCompany = session['logedInCompany']
+    select_sql = "SELECT * FROM employee WHERE emp_id = %s"
+    cursor = db_conn.cursor()
+
+    try:
+        cursor.execute(select_sql, (currentCompany,))
+        company = cursor.fetchone()
+
+        if not company:
+            print("company not found")
+
+        comp_name = company[2]
+        comp_about = company[3]
+        comp_address = company[4]
+        comp_email = company[5]
+        comp_phone = company[6] 
+
     except Exception as e:
         return str(e)
 
     finally:
         cursor.close()
-        return render_template('EditCompanyProfile.html',compName=comp_name, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)   
     
+    return render_template('EditCompanyProfile.html', compName=comp_name, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
 
 @app.route('/login_admin')
 def login_admin():
