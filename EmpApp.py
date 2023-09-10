@@ -141,11 +141,39 @@ def loginCompany():
     return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password")
 
 
+@app.route("/loginCompany", methods=['GET','POST'])
+def loginCompany():
+    if request.method == 'POST':
+        email = request.form['company_email']
+        password = request.form['password']
 
+        select_sql = "SELECT * FROM company WHERE email = %s AND password = %s"
+        cursor = db_conn.cursor()
 
+        try:
+            cursor.execute(select_sql, (email,password,))
+            company = cursor.fetchone()
 
+            if company:  
+                session['logedInCompany'] = str(company[0])
+                return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
+            
+        except Exception as e:
+            return str(e)
+        
+        finally:   
+            cursor.close()
+        
+    return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password")
 
+@app.route("/loginAdmin")
+def loginAdmin():
+    admin_id = request.form.get('admin_ID')
+    password = request.form.get('password')
 
+    if admin_id != "Admin001" or password != "12345678":
+        return render_template('LoginAdmin.html')
+    return render_template('AdminDashboard.html', id=admin_id)
 
 
 
