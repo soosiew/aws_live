@@ -3,6 +3,7 @@ from pymysql import connections
 import os
 import boto3
 import datetime
+import base64
 from config import *
 
 app = Flask(__name__)
@@ -94,7 +95,9 @@ def manage_company_profile():
             
             # image_data = response['Body'].read()
             print(response)
-            return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
+            image_url = f"data:image/jpeg;base64,{base64.b64encode(response).decode('utf-8')}"
+            print(image_url)
+            return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=image_url, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
             
         except Exception as e:
             print(str(e))
