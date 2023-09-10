@@ -113,7 +113,7 @@ def login_company():
 @app.route('/manage_company_profile')
 def manage_company_profile():
     currentCompany = str(session['logedInCompany'])
-    select_sql = "SELECT * FROM comp WHERE companyId = %s"
+    select_sql = "SELECT * FROM company WHERE companyId = %s"
     cursor = db_conn.cursor()
 
     try:
@@ -122,7 +122,7 @@ def manage_company_profile():
 
         if not company:
             print("company not found")
-
+        
         print("Company tuple:", company)
         comp_name = company[2]
         comp_about = company[3]
