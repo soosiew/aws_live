@@ -106,7 +106,8 @@ def addCompanyRegistration():
         return render_template('EditCompanyProfile.html')
     
     except Exception as e:
-        return render_template('EditCompanyProfile.html')
+        print("failed get count...")
+        return render_template('home.html')
 
 
 
