@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request
 from pymysql import connections
 import os
 import boto3
@@ -97,7 +97,6 @@ def addCompanyRegistration():
         
         finally:
             cursor.close()
-            flash('Success! Your operation was successful.', 'success')
             print("Company registration request submitted...")
             return render_template('home.html')
     
