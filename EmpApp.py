@@ -122,7 +122,7 @@ def loginCompany():
 
             if company:  
                 session['logedInCompany'] = str(company[0])
-                return render_template('ViewCompanyApplication.html')
+                return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
             
         except Exception as e:
             return str(e)
