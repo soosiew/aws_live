@@ -72,7 +72,7 @@ def addCompanyRegistration():
 
         if company_image_file.filename == "":
             return "Please select a file"
-        
+        print("hihihiihihiiihhihi")
         try:
                 cursor.execute(insert_sql, (result[0], password, company_name, about_company, company_address, company_email, company_phone, "",))
                 db_conn.commit()
