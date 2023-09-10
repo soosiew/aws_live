@@ -93,11 +93,7 @@ def manage_company_profile():
                                                          'Key': comp_image_file_name_in_s3},
                                                  ExpiresIn=3600)  # Adjust the expiration time as needed
             
-            # image_data = response['Body'].read()
-            print(response)
-            image_url = f"data:image/jpeg;base64,{base64.b64encode(response).decode('utf-8')}"
-            print(image_url)
-            return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=image_url, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
+            return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
             
         except Exception as e:
             print(str(e))
