@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Register Company</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/company.css')}}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+	<nav>
+		<div class="homeNav">
+			<a href="/"></a>
+		</div>
+		<div class="otherNav">
+			<div class="dropdown">
+				<a class="dropdown-button" onclick="toggleDropdown()">Job</a>
+				<div id="dropdownOptions" class="dropdown-content">
+					<a href="#">Create New</a>
+					<a href="#">View / Manage</a>
+				</div>
+			</div>
+			<a href="#">View / Manage Application</a>
+			<a href="/manage_company_profile">Edit Profile/ Account</a>
+			<a href="/">Logout</a>
+		</div>
+	</nav>
+</head>
+
+<body>
+	<div class="logedIn">
+		<i class="fas fa-user-circle"></i>
+		<label>
+			ABC company
+		</label>
+	</div>
+
+	<form action="/addCompanyReg" autocomplete="on" method="POST" enctype="multipart/form-data">
+		<div class="h1">
+			<h1>
+				Edit Company Profile
+			</h1>
+		</div>
+
+		<fieldset>
+			<div class="container">
+				<div class="title">
+					<legend>Company Information</legend>
+				</div>
+				<div>
+					<table>
+						<tr>
+							<td>
+								<label class="label">Name</label>
+							</td>
+							<td>
+								<textarea class="inputText" type="text" name="company_name" autofocus size="40"
+									placeholder="Enter company name"></textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Company Logo</label>
+							</td>
+							<td>
+								<input class="uploadCompLogo" type=file name="company_image_file">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">About Company</label>
+							</td>
+							<td>
+								<textarea class="inputText" type="text" name="about_company"
+									placeholder="Enter information about the company"></textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Phone Number (+60)</label>
+							</td>
+							<td>
+								<input class="inputText" name="company_phone"
+									placeholder="Enter phone number of the company">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Email</label>
+							</td>
+							<td>
+								<input class="inputText" type="text" name="company_email"
+									placeholder="Enter email of the company">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Address</label>
+							</td>
+							<td>
+								<textarea class="inputText" type="text" name="company_address"
+									placeholder="Enter address of the company"></textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<td></td>
+							<td>
+								<button class="submitBtn" type="submit">Update</button>
+							</td>
+						</tr>
+					</table>
+
+
+				</div>
+
+			</div>
+
+		</fieldset>
+	</form>
+
+
+	<form action="/addCompanyReg" autocomplete="on" method="POST" enctype="multipart/form-data">
+		<div class="h1">
+			<h1>
+				Change Password
+			</h1>
+		</div>
+
+		<div>
+			<fieldset>
+				<div class="container">
+					<div>
+						<table style="margin-top: 10px;">
+							<tr>
+								<td>
+									<label class="label">Current Password</label>
+								</td>
+								<td>
+									<input class="inputText" type="password" name="current_paassword"
+										placeholder="Enter current password">
+								</td>
+							</tr>
+
+							<tr>
+								<td>
+									<label class="label">New Password</label>
+								</td>
+								<td>
+									<input class="inputText" type="password" name="new_password"
+										placeholder="Enter new password">
+								</td>
+							</tr>
+							
+							<tr>
+								<td>
+									<label class="label">Confirm Password</label>
+								</td>
+								<td>
+									<input class="inputText" type="password" name="confirm_password"
+										placeholder="Enter confirm password">
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<button class="chgPasswdBtn" type="submit">Change Password</button>
+								</td>
+							</tr>
+						</table>
+						
+					</div>
+				</div>
+			</fieldset>
+		</div>
+	</form>
+
+
+
+
+
+	<script src="{{ url_for('static', filename='script/master.js') }}"></script>
+</body>
+
+
+</html>

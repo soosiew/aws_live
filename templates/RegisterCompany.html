@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Register Company</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/company.css')}}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}" />
+
+	<nav>
+		<div class="homeNav">
+			<a href="/">Home</a>
+		</div>
+		<div class="otherNav">
+			<div class="dropdown">
+				<a class="dropdown-button" onclick="toggleDropdown()">Company</a>
+				<div id="dropdownOptions" class="dropdown-content">
+					<a href="/register_company">Sign Up</a>
+					<a href="/login_company">Login</a>
+				</div>
+			</div>
+			<a href="#">Uni Supervisor</a>
+			<a href="/login_admin">Admin</a>
+			<a href="#">Student</a>
+		</div>
+	</nav>
+</head>
+
+<body>
+
+	<form action="/addCompanyReg" autocomplete="on" method="POST" enctype="multipart/form-data">
+		<div class="h1">
+			<h1>
+				Register Company
+			</h1>
+		</div>
+
+		<fieldset>
+			<div class="container">
+				<div class="title">
+					<legend>Company Information</legend>
+				</div>
+				<div>
+					<table>
+						<tr>
+							<td>
+								<label class="label">Name</label>
+							</td>
+							<td>
+								<textarea class="inputText" type="text" name="company_name" autofocus size="40"
+									placeholder="Enter company name"></textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Company Logo</label>
+							</td>
+							<td>
+								<input class="uploadCompLogo" type=file name="company_image_file">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">About Company</label>
+							</td>
+							<td>
+								<textarea class="inputText" type="text" name="about_company"
+									placeholder="Enter information about the company"></textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Phone Number (+60)</label>
+							</td>
+							<td>
+								<input class="inputText" name="company_phone"
+									placeholder="Enter phone number of the company">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Email</label>
+							</td>
+							<td>
+								<input class="inputText" type="text" name="company_email"
+									placeholder="Enter email of the company">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Address</label>
+							</td>
+							<td>
+								<textarea class="inputText" type="text" name="company_address"
+									placeholder="Enter address of the company"></textarea>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Password</label>
+							</td>
+							<td>
+								<input class="inputText" type="password" name="password" placeholder="Enter password">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Confirm Password</label>
+							</td>
+							<td>
+								<input class="inputText" type="password" name="confirm_password"
+									placeholder="Enter confirm password">
+							</td>
+						</tr>
+
+						<tr>
+							<td></td>
+							<td>
+								<button class="submitBtn" type="submit">Register</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+
+		</fieldset>
+	</form>
+
+	<script src="{{ url_for('static', filename='script/master.js') }}"></script>
+</body>
+
+
+</html>
