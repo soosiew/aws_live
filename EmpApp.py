@@ -142,8 +142,8 @@ def loginCompany():
 
 @app.route("/loginAdmin")
 def loginAdmin():
-    admin_id = request.form.get('admin_ID')
-    password = request.form.get('password')
+    admin_id = request.form('admin_ID')
+    password = request.form('password')
 
     if admin_id != "Admin001" or password != "12345678":
         return render_template('LoginAdmin.html')
