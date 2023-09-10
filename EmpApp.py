@@ -58,7 +58,7 @@ def addCompanyRegistration():
         # Close the cursor
         cursor.close()
 
-        company_id = str(total_count)
+        company_id = total_count
         company_name = request.form['company_name']
         company_image_file = request.files['company_image_file']
         about_company = request.form['about_company']
@@ -67,7 +67,7 @@ def addCompanyRegistration():
         company_email = request.form['company_email']
         password = request.form['password']
 
-        insert_sql = "INSERT INTO company VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        insert_sql = "INSERT INTO company VALUES (%d, %s, %s, %s, %s, %s, %s, %s)"
         cursor = db_conn.cursor()
 
         if company_image_file.filename == "":
