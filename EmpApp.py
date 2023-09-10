@@ -141,7 +141,9 @@ def manage_company_profile():
                                                  ExpiresIn=3600)  # Adjust the expiration time as needed
             print(response)
             image_data = response['Body'].read()
-            return render_template('EditCompanyProfile.html',compName=Response(image_data, content_type=response['ContentType']), compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
+
+            print(image_data)
+            return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=Response(image_data, content_type=response['ContentType']), compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
             
         except Exception as e:
             return str(e)
