@@ -114,7 +114,8 @@ def loginCompany():
 
         select_sql = "SELECT * FROM company WHERE email = %s AND password = %s"
         cursor = db_conn.cursor()
-
+        print(password)
+        
         try:
             cursor.execute(select_sql, (email,password,))
             company = cursor.fetchone()
