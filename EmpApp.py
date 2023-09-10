@@ -140,11 +140,9 @@ def manage_company_profile():
                                                  Params={'Bucket': bucket_name,
                                                          'Key': comp_image_file_name_in_s3},
                                                  ExpiresIn=3600)  # Adjust the expiration time as needed
-            
-            
-
+            print(response)
             return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
-            
+
         except Exception as e:
             return str(e)
 
