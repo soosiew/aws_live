@@ -51,7 +51,7 @@ def addCompanyRegistration():
         cursor.execute(select_sql)
         result = cursor.fetchone()
         print("hihi")
-        print(result['total'])
+        print(result[0])
         
         # Get the total row count from the result
         total_count = result['total']
