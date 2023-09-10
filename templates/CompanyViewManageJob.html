@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Register Company</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/company.css')}}" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+	<nav>
+		<div class="homeNav">
+			<a href="/"></a>
+		</div>
+		<div class="otherNav">
+			<div class="dropdown">
+				<a class="dropdown-button" onclick="toggleDropdown()">Job</a>
+				<div id="dropdownOptions" class="dropdown-content">
+					<a href="/publish_job">Create New</a>
+					<a href="#">View / Manage</a>
+				</div>
+			</div>
+			<a href="/companyViewApplication">View / Manage Application</a>
+			<a href="/manage_company_profile">Edit Profile/ Account</a>
+			<a href="/logoutCompany">Logout</a>
+		</div>
+	</nav>
+</head>
+
+<body>
+	<div class="logedIn">
+		<i class="fas fa-user-circle"></i>
+		<label>
+			{{name}}
+		</label>
+	</div>
+
+	<form action="/addJob" autocomplete="on" method="POST" enctype="multipart/form-data">
+		<div class="h1">
+			<h1>
+				Publish Job
+			</h1>
+		</div>
+		
+		<fieldset>
+			<div class="container">
+				<div class="title">
+					<legend>Job Details</legend>
+				</div>
+				<div>
+					<table>
+						<tr>
+							<td>
+								<label class="label">Job Position</label>
+							</td>
+							<td>
+								<input class="inputText" type="text" name="job_position" autofocus size="40"
+									placeholder="Enter job position">
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Industry/Field</label>
+							</td>
+							<td>
+								<select class="dropDownJobtype" name="job_industry">
+									<option value="1">Information Technology</option>
+									<option value="2">Healthcare</option>
+									<option value="3">Finance</option>
+									<option value="4">Engineering</option>
+									<option value="5">Education</option>
+									<option value="6">Marketing</option>
+									<option value="7">Retail</option>
+									<option value="8">Hospitality</option>
+									<option value="9">Automotive</option>
+									<option value="10">Media and Entertainment</option>
+									<option value="11">Construction</option>
+									<option value="12">Telecommunications</option>
+									<option value="13">Manufacturing</option>
+									<option value="14">Legal</option>
+									<option value="15">Non-profit and Social Services
+									</option>
+									<option value="16">Government and Public
+										Administration</option>
+									<option value="17">Real Estate</option>
+									<option value="18">Aerospace</option>
+									<option value="19">Energy</option>
+									<option value="20">Biotechnology and Pharmaceuticals
+									</option>
+								</select>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Job Type</label>
+							</td>
+							<td>
+								<select class="dropDownJobtype" name="job_type">
+									<option value="part_time">Part Time</option>
+									<option value="full_time">Full Time</option>
+									<option value="internship">Internship</option>
+								</select>
+							</td>
+						</tr>
+
+						<tr>
+							<td>
+								<label class="label">Job Description</label>
+							</td>
+							<td>
+								<textarea class="inputText" name="job_description"
+									placeholder="Enter job description"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="label">Job Requirement</label>
+							</td>
+							<td>
+								<textarea class="inputText" name="job_requirement"
+									placeholder="Enter job requirement"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="label">Job Location</label>
+							</td>
+							<td>
+								<textarea class="inputText" type="text" name="job_location"
+									placeholder="Enter job location"></textarea>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="label">Salary (RM)</label>
+							</td>
+							<td>
+								<input class="inputText" type="text" name="job_salary" placeholder="Enter job salary">
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="label">Number of Openings</label>
+							</td>
+							<td>
+								<input class="inputText" type="number" name="job_openings"
+									placeholder="Enter number of openings" min="0" step="1">
+							</td>
+						</tr>
+
+						<tr>
+							<td></td>
+							<td>
+								<button class="submitBtn" type="submit">Publish</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+
+			</div>
+
+		</fieldset>
+	</form>
+
+	<script src="{{ url_for('static', filename='script/master.js') }}"></script>
+</body>
+
+
+</html>

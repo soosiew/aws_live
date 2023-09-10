@@ -54,13 +54,22 @@ def publish_job():
 def companyViewApplication():
     return render_template('ViewCompanyApplication.html')
 
+@app.route('/companyViewManageJob')
+def companyViewManageJob():
+    return render_template('CompanyViewManageJob.html')
+
 @app.route('/login_company')
 def login_company():
     return render_template('LoginCompany.html')
 
 @app.route('/manage_company_profile')
 def manage_company_profile():
-    return render_template('EditCompanyProfile.html')
+    companyName = "testing"
+
+
+
+    
+    return render_template('EditCompanyProfile.html', company_name = companyName)
 
 @app.route('/login_admin')
 def login_admin():
