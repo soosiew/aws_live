@@ -58,9 +58,7 @@ def addCompanyRegistration():
         # Close the cursor
         cursor.close()
 
-        print(str(result[0]))
-
-        company_id = int(result[0])
+        
         company_name = request.form['company_name']
         company_image_file = request.files['company_image_file']
         about_company = request.form['about_company']
@@ -76,7 +74,7 @@ def addCompanyRegistration():
             return "Please select a file"
         
         try:
-                cursor.execute(insert_sql, (company_id, password, company_name, about_company, company_address, company_email, company_phone, ""))
+                cursor.execute(insert_sql, (int(result[0]), password, company_name, about_company, company_address, company_email, company_phone, ""))
                 db_conn.commit()
                 
                 # Uplaod image file in S3 #
