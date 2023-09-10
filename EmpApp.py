@@ -51,14 +51,9 @@ def addCompanyRegistration():
         cursor.execute(select_sql)
         result = cursor.fetchone()
         
-        # # Get the total row count from the result
-        # total_count = result[0]
-        # print("total in company - " + total_count)
-        
-        # Close the cursor
         cursor.close()
 
-        company_id = ((int)result[0]) + 1
+        company_id = int(result[0]) + 1
         company_name = request.form['company_name']
         company_image_file = request.files['company_image_file']
         about_company = request.form['about_company']
