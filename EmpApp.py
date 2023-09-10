@@ -169,6 +169,10 @@ def addJob():
                
         except Exception as e:
                 print(str(e))
+
+    except Exception as e:
+                print(str(e))
+                
     finally:
         cursor.close()
         print("Job published...")
