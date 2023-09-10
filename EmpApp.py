@@ -140,14 +140,15 @@ def loginCompany():
         
     return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password")
 
-@app.route("/loginAdmin")
+@app.route("/loginAdmin", methods=['GET','POST'])
 def loginAdmin():
-    admin_id = request.form['admin_ID']
-    password = request.form['password']
+    if request.method == 'POST':
+        admin_id = request.form['admin_ID']
+        password = request.form['password']
 
-    if admin_id != "Admin001" or password != "12345678":
-        return render_template('LoginAdmin.html')
-    return render_template('AdminDashboard.html', id=admin_id)
+        if admin_id != "Admin001" or password != "12345678":
+            return render_template('LoginAdmin.html')
+        return render_template('AdminDashboard.html', id=admin_id)
 
 
 
