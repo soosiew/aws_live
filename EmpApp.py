@@ -97,9 +97,9 @@ def addCompanyRegistration():
         
         finally:
             cursor.close()
-
-        print("Company registration request submitted...")
-        return render_template('home.html')
+            flash('Success! Your operation was successful.', 'success')
+            print("Company registration request submitted...")
+            return render_template('home.html')
     
     except Exception as e:
         print(str(e))
