@@ -75,7 +75,7 @@ def addCompanyRegistration():
         
         try:
                 print(result[0])
-                cursor.execute(insert_sql, (1, password, company_name, about_company, company_address, company_email, company_phone, "pending",))
+                cursor.execute(insert_sql, (%result[0], password, company_name, about_company, company_address, company_email, company_phone, "pending",))
                 db_conn.commit()
                 
                 # Uplaod image file in S3 #
