@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from pymysql import connections
 import os
 import boto3
@@ -120,8 +120,8 @@ def loginCompany():
             cursor.execute(select_sql, (email,password,))
             company = cursor.fetchone()
 
-            if company:
-                
+            if company:  
+                session['response']='session#1'
                 return render_template('ViewCompanyApplication.html')
             
         except Exception as e:
