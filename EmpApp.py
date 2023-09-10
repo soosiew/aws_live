@@ -121,8 +121,8 @@ def loginCompany():
             company = cursor.fetchone()
 
             if company:  
-                # session['response'] = str(company[0])
-                print(company[0])
+                session['response'] = str(company[0])
+                print(session['response'])
                 return render_template('ViewCompanyApplication.html')
             
         except Exception as e:
