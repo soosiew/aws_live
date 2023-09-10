@@ -45,6 +45,10 @@ def logoutAdmin():
 def register_company():
     return render_template('RegisterCompany.html')
 
+@app.route('/companyViewApplication')
+def companyViewApplication():
+    return render_template('ViewCompanyApplication.html')
+
 @app.route('/login_company')
 def login_company():
     return render_template('LoginCompany.html')
