@@ -159,6 +159,7 @@ def addJob():
         company = int(id)      
 
         insert_sql = "INSERT INTO job VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        print("get industry : " + job_industry)
         cursor = db_conn.cursor()
         print("get industry : " + job_industry)
 
