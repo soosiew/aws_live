@@ -123,7 +123,6 @@ def manage_company_profile():
         if not company:
             print("company not found")
 
-        print("Company tuple:", company)
         comp_name = company[2]
         comp_about = company[3]
         comp_address = company[4]
@@ -142,7 +141,7 @@ def manage_company_profile():
                                                  ExpiresIn=3600)  # Adjust the expiration time as needed
             print(response)
             return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
-
+            
         except Exception as e:
             return str(e)
 
