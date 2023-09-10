@@ -20,16 +20,48 @@ db_conn = connections.Connection(
 output = {}
 table = 'employee'
 
+@app.route('/')
+def index():
+    return render_template('RegisterCompany.html', number=1)
+
+@app.route('/register_company')
+def register_company():
+    return render_template('RegisterCompany.html')
+
+@app.route('/login_company')
+def login_company():
+    return render_template('LoginCompany.html')
+
+@app.route('/manage_company_profile')
+def manage_company_profile():
+    return render_template('EditCompanyProfile.html')
+
+@app.route('/login_admin')
+def login_admin():
+    return render_template('LoginAdmin.html')
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
     return render_template('AddEmp.html')
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @app.route("/about", methods=['POST'])
 def about():
     return render_template('www.tarc.edu.my')
-
 
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
