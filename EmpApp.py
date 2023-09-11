@@ -49,24 +49,21 @@ def register_company():
 
 @app.route('/publish_job')
 def publish_job():
-    return render_template('PublishJob.html')
+    data_company = passCompSession().get_json()
+    comp_name = data_company.get('comp_name', '')
+    return render_template('PublishJob.html', name=comp_name)
 
 @app.route('/companyViewApplication')
 def companyViewApplication():
     data_company = passCompSession().get_json()
-    
     comp_name = data_company.get('comp_name', '')
-    print(comp_name)
-    # comp_about = data_company.get('comp_about', '')
-    # comp_address = data_company.get('comp_address', '')
-    # comp_email = data_company.get('comp_email', '')
-    # comp_phone = data_company.get('comp_phone', '')
     return render_template('ViewCompanyApplication.html', name=comp_name)
-    # return render_template('ViewCompanyApplication.html')
 
 @app.route('/companyViewManageJob')
 def companyViewManageJob():
-    return render_template('CompanyViewManageJob.html')
+    data_company = passCompSession().get_json()
+    comp_name = data_company.get('comp_name', '')
+    return render_template('CompanyViewManageJob.html', name=comp_name)
 
 @app.route('/login_company')
 def login_company():
@@ -402,7 +399,9 @@ def addJob():
     finally:
         cursor.close()
         print("Job published...")
-        return render_template('ViewCompanyApplication.html')
+        data_company = passCompSession().get_json()
+        comp_name = data_company.get('comp_name', '')
+        return render_template('ViewCompanyApplication.html', name=comp_name)
     
 @app.route("/loginCompany", methods=['GET','POST'])
 def loginCompany():
