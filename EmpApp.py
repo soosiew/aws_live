@@ -63,6 +63,64 @@ def companyViewManageJob():
 def login_company():
     return render_template('LoginCompany.html')
 
+@app.route("/updateCompanyProfile", methods=['POST'])
+def updateCompanyProfile():
+    currentCompany = str(session['logedInCompany'])
+    companyName = request.form['company_name']
+    companyAbout = request.form['about_company']
+    companyPhone = request.form['company_phone']
+    companyEmail = request.form['company_email']
+    companyAddress = request.form['company_address']
+    company_image_file = request.files['company_image_file']
+
+    update_sql = "UPDATE company SET name=%s, about=%s, address=%s, email=%s, phone=%s WHERE companyId=%s"
+    cursor = db_conn.cursor()
+
+    if company_image_file.filename == "":
+        return "Please select a file"
+
+    try:
+        # Check if the company exists
+        check_sql = "SELECT * FROM company WHERE companyId = %s"
+        cursor.execute(check_sql, (currentCompany,))
+        existing_lecturer = cursor.fetchone()
+
+        if not existing_lecturer:
+            return "Lecturer not found"
+        
+        cursor.execute(update_sql, (companyName, companyAbout, companyPhone, companyEmail, companyAddress, int(currentCompany)))
+        db_conn.commit()
+        
+
+        # Update image file in S3
+        comp_image_file_name_in_s3 = "comp-id-" + str(currentCompany) + "_image_file"
+        s3 = boto3.resource('s3')
+
+        try:
+            print("Updating company profile...")
+            s3.Bucket(custombucket).put_object(Key=comp_image_file_name_in_s3, Body=company_image_file)
+            bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+            s3_location = (bucket_location.get('LocationConstraint'))
+
+            if s3_location is None:
+                s3_location = ''
+            else:
+                s3_location = '-' + s3_location
+
+            object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                s3_location,
+                custombucket,
+                comp_image_file_name_in_s3)
+
+        except Exception as e:
+            return str(e)
+
+    finally:
+        cursor.close()
+
+    print("Company profile updated successfully...")
+    return render_template('EditCompanyProfile.html')
+
 @app.route('/manage_company_profile')
 def manage_company_profile():
     currentCompany = str(session['logedInCompany'])

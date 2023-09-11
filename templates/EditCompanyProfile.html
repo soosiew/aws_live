@@ -36,7 +36,7 @@
 		</label>
 	</div>
 
-	<form action="/addCompanyReg" autocomplete="on" method="POST" enctype="multipart/form-data">
+	<form action="/updateCompanyProfile" autocomplete="on" method="POST" enctype="multipart/form-data">
 		<div class="h1">
 			<h1>
 				Edit Company Profile
@@ -68,7 +68,7 @@
 								<div class="comp-image-container">
 									<img id="companyLogo" src="{{ compLogo }}" alt="Image">
 								</div>
-								<input class="uploadCompLogo" type=file id="imageUpload" accept="image/*">
+								<input class="uploadCompLogo" type=file id="imageUpload" accept="image/*" name="company_image_file">
 								<!-- name="compLogo" -->
 							</td>
 						</tr>
