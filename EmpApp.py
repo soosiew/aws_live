@@ -53,13 +53,15 @@ def publish_job():
 
 @app.route('/companyViewApplication')
 def companyViewApplication():
-    date_company = passCompSession()
-    comp_name = date_company.json.get('comp_name')
-    comp_about = date_company.json.get('comp_about')
-    comp_address = date_company.json.get('comp_address')
-    comp_email = date_company.json.get('comp_email')
-    comp_phone = date_company.json.get('comp_phone')
-    return render_template('ViewCompanyApplication.html', name=comp_name, compName=comp_name, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
+    data_company = passCompSession()
+
+    comp_name = data_company.get('comp_name', '')
+    print(comp_name)
+    # comp_about = data_company.get('comp_about', '')
+    # comp_address = data_company.get('comp_address', '')
+    # comp_email = data_company.get('comp_email', '')
+    # comp_phone = data_company.get('comp_phone', '')
+    return render_template('ViewCompanyApplication.html', name=comp_name)
     # return render_template('ViewCompanyApplication.html')
 
 @app.route('/companyViewManageJob')
@@ -81,16 +83,14 @@ def passCompSession():
 
         if not company:
             print("company not found")
-
-            comp = {
-                'comp_name': company[2],
-                'comp_about': company[3],
-                'comp_address': company[4],
-                'comp_email': company[5],
-                'comp_phone': company[6]
-            }
-                 
-            return jsonify(comp)
+            
+        return jsonify({
+        'comp_name': company[2],
+        'comp_about': company[3],
+        'comp_address': company[4],
+        'comp_email': company[5],
+        'comp_phone': company[6]
+        })
             
     except Exception as e:
         print(str(e))
