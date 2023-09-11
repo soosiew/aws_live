@@ -68,9 +68,10 @@ def updateCompanyProfile():
     currentCompany = str(session['logedInCompany'])
     companyName = request.form['company_name']
     companyAbout = request.form['about_company']
-    
+    print(companyAbout)
+    print(str(request.form['company_phone']))
     companyPhone = request.form['company_phone']
-    print(companyPhone)
+    
     companyEmail = request.form['company_email']
     companyAddress = request.form['company_address']
     company_image_file = request.files['company_image_file']
@@ -153,7 +154,6 @@ def manage_company_profile():
                                                          'Key': comp_image_file_name_in_s3},
                                                  ExpiresIn=7400)  # Adjust the expiration time as needed            
             
-            print(response)
             return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
             
         except Exception as e:
