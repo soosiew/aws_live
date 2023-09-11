@@ -54,7 +54,7 @@ def publish_job():
 @app.route('/companyViewApplication')
 def companyViewApplication():
     data_company = passCompSession()
-
+    
     comp_name = data_company.get('comp_name', '')
     print(comp_name)
     # comp_about = data_company.get('comp_about', '')
@@ -81,9 +81,9 @@ def passCompSession():
         cursor.execute(select_sql, (currentCompany,))
         company = cursor.fetchone()
 
-        if not company:
-            print("company not found")
-            
+        # if not company:
+        #     print("company not found")
+        print("hihi" + company[2])
         return jsonify({
         'comp_name': company[2],
         'comp_about': company[3],
