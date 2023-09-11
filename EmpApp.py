@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, Response
+from flask import Flask, render_template, request, session, Response, jsonify
 from pymysql import connections
 import os
 import boto3
@@ -53,7 +53,14 @@ def publish_job():
 
 @app.route('/companyViewApplication')
 def companyViewApplication():
-    return render_template('ViewCompanyApplication.html')
+    date_company = passCompSession()
+    comp_name = date_company.json.get('comp_name', '')
+    comp_about = date_company.json.get('comp_about', '')
+    comp_address = date_company.json.get('comp_address', '')
+    comp_email = date_company.json.get('comp_email', '')
+    comp_phone = date_company.json.get('comp_phone', '')
+    return render_template('ViewCompanyApplication.html', name=comp_name, compName=comp_name, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
+    # return render_template('ViewCompanyApplication.html')
 
 @app.route('/companyViewManageJob')
 def companyViewManageJob():
@@ -62,6 +69,34 @@ def companyViewManageJob():
 @app.route('/login_company')
 def login_company():
     return render_template('LoginCompany.html')
+
+def passCompSession():
+    currentCompany = str(session['logedInCompany'])
+    select_sql = "SELECT * FROM company WHERE companyId = %s"
+    cursor = db_conn.cursor()
+
+    try:
+        cursor.execute(select_sql, (currentCompany,))
+        company = cursor.fetchone()
+
+        if not company:
+            print("company not found")
+
+            comp = {
+                'comp_name': company[2],
+                'comp_about': company[3],
+                'comp_address': company[4],
+                'comp_email': company[5],
+                'comp_phone': company[6]
+            }
+                 
+            return jsonify(comp)
+            
+    except Exception as e:
+        print(str(e))
+
+    finally:
+        cursor.close()
 
 @app.route('/updateCompanyPassword', methods=['POST'])
 def updateCompanyPassword():
@@ -86,7 +121,7 @@ def updateCompanyPassword():
     finally:
         cursor.close()
         print("Company password updated successfully...")
-        
+
         # Reload page with updated company profile
         currentCompany = str(session['logedInCompany'])
         select_sql = "SELECT * FROM company WHERE companyId = %s"
