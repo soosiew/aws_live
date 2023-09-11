@@ -68,7 +68,9 @@ def updateCompanyProfile():
     currentCompany = str(session['logedInCompany'])
     companyName = request.form['company_name']
     companyAbout = request.form['about_company']
+    
     companyPhone = request.form['company_phone']
+    print(companyPhone)
     companyEmail = request.form['company_email']
     companyAddress = request.form['company_address']
     company_image_file = request.files['company_image_file']
