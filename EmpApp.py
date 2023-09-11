@@ -115,7 +115,7 @@ def updateCompanyProfile():
     finally:
         cursor.close()
         print("Company profile updated successfully...")
-        manage_company_profile()
+        result = manage_company_profile()
         # return render_template('EditCompanyProfile.html')
 
 @app.route('/manage_company_profile')
