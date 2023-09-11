@@ -54,11 +54,11 @@ def publish_job():
 @app.route('/companyViewApplication')
 def companyViewApplication():
     date_company = passCompSession()
-    comp_name = date_company.json.get('comp_name', '')
-    comp_about = date_company.json.get('comp_about', '')
-    comp_address = date_company.json.get('comp_address', '')
-    comp_email = date_company.json.get('comp_email', '')
-    comp_phone = date_company.json.get('comp_phone', '')
+    comp_name = date_company.json.get('comp_name')
+    comp_about = date_company.json.get('comp_about')
+    comp_address = date_company.json.get('comp_address')
+    comp_email = date_company.json.get('comp_email')
+    comp_phone = date_company.json.get('comp_phone')
     return render_template('ViewCompanyApplication.html', name=comp_name, compName=comp_name, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
     # return render_template('ViewCompanyApplication.html')
 
