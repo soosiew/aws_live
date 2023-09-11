@@ -68,28 +68,25 @@ def updateCompanyProfile():
     currentCompany = str(session['logedInCompany'])
     companyName = request.form['company_name']
     companyAbout = request.form['about_company']
-    print(companyAbout)
-    print(str(request.form['company_phone']))
     companyPhone = request.form['company_phone']
-    
     companyEmail = request.form['company_email']
     companyAddress = request.form['company_address']
     company_image_file = request.files['company_image_file']
 
-    update_sql = "UPDATE company SET name=%s, about=%s, address=%s, email=%s, phone=%s WHERE companyId=%s"
+    update_sql = "UPDATE company SET name=%s, about=%s, phone=%s, email=%s, address=%s WHERE companyId=%s"
     cursor = db_conn.cursor()
 
     if company_image_file.filename == "":
         return "Please select a file"
 
     try:
-        # Check if the company exists
-        check_sql = "SELECT * FROM company WHERE companyId = %s"
-        cursor.execute(check_sql, (currentCompany,))
-        existing_lecturer = cursor.fetchone()
+        # # Check if the company exists
+        # check_sql = "SELECT * FROM company WHERE companyId = %s"
+        # cursor.execute(check_sql, (currentCompany,))
+        # existing_lecturer = cursor.fetchone()
 
-        if not existing_lecturer:
-            return "Lecturer not found"
+        # if not existing_lecturer:
+        #     return "Lecturer not found"
         
         cursor.execute(update_sql, (companyName, companyAbout, companyPhone, companyEmail, companyAddress, int(currentCompany)))
         db_conn.commit()
@@ -120,9 +117,8 @@ def updateCompanyProfile():
 
     finally:
         cursor.close()
-
-    print("Company profile updated successfully...")
-    return render_template('EditCompanyProfile.html')
+        print("Company profile updated successfully...")
+        return render_template('EditCompanyProfile.html')
 
 @app.route('/manage_company_profile')
 def manage_company_profile():
