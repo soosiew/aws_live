@@ -65,7 +65,9 @@
 								<label class="label">Company Logo</label>
 							</td>
 							<td>
-								<img id="companyLogo" src="{{ compLogo }}" alt="Image" style="width: 150px; height: 150px;">
+								<div class="comp-image-container">
+									<img id="companyLogo" src="{{ compLogo }}" alt="Image">
+								</div>
 								<input class="uploadCompLogo" type=file id="imageUpload" accept="image/*">
 								<!-- name="compLogo" -->
 							</td>
@@ -80,14 +82,14 @@
 									placeholder="Enter information about the company">{{ compAbout }}</textarea>
 							</td>
 						</tr>
-						
+
 						<tr>
 							<td>
 								<label class="label">Phone Number (+60)</label>
 							</td>
 							<td>
 								<textarea class="inputText" type="text" name="company_phone"
-									placeholder="Enter phone number of the company">{{ compPhone }}</textarea>					
+									placeholder="Enter phone number of the company">{{ compPhone }}</textarea>
 							</td>
 						</tr>
 
@@ -159,7 +161,7 @@
 										placeholder="Enter new password">
 								</td>
 							</tr>
-							
+
 							<tr>
 								<td>
 									<label class="label">Confirm Password</label>
@@ -176,7 +178,7 @@
 								</td>
 							</tr>
 						</table>
-						
+
 					</div>
 				</div>
 			</fieldset>

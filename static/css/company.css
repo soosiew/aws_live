@@ -217,5 +217,17 @@ td:first-child {
     transition: 0.3s;
 }
 
+.comp-image-container {
+    max-width: 150px;
+    max-height: 150px;
+    overflow: hidden; /* Clip the image if it exceeds the container dimensions */
+}
 
+/* Ensure the image maintains its original aspect ratio */
+.comp-image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto; /* Automatically adjust width to maintain aspect ratio */
+    height: auto; /* Automatically adjust height to maintain aspect ratio */
+}
 
