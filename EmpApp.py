@@ -31,17 +31,17 @@ def index():
 def logoutCompany():  
     if 'id' in session:  
         session.pop('logedInCompany',None)  
-        return render_template('home.html');  
+        return render_template('home.html')  
     else:  
-        return render_template('home.html'); 
+        return render_template('home.html') 
 
 @app.route('/logoutAdmin')
 def logoutAdmin():  
     if 'id' in session:  
         session.pop('logedInAdmin',None)  
-        return render_template('home.html');  
+        return render_template('home.html')
     else:  
-        return render_template('home.html');
+        return render_template('home.html')
 
 @app.route('/register_company')
 def register_company():
@@ -218,7 +218,6 @@ def updateCompanyProfile():
         finally:
             cursor.close()
         
-
 @app.route('/manage_company_profile')
 def manage_company_profile():
     currentCompany = str(session['logedInCompany'])
@@ -259,7 +258,6 @@ def manage_company_profile():
     finally:
         cursor.close()
         
-
 @app.route('/login_admin')
 def login_admin():
     return render_template('LoginAdmin.html')
@@ -374,8 +372,6 @@ def addJob():
         print("Job published...")
         return render_template('ViewCompanyApplication.html')
     
-
-
 @app.route("/loginCompany", methods=['GET','POST'])
 def loginCompany():
     if request.method == 'POST':
