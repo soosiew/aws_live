@@ -63,7 +63,7 @@ def companyViewManageJob():
 def login_company():
     return render_template('LoginCompany.html')
 
-@app.route('/updateCompanyPassword')
+@app.route('/updateCompanyPassword', methods=['POST'])
 def updateCompanyPassword():
     currentCompany = str(session['logedInCompany'])
     password = request.form['new_password']
