@@ -75,50 +75,47 @@ def updateCompanyProfile():
 
     update_sql = "UPDATE company SET name=%s, about=%s, phone=%s, email=%s, address=%s WHERE companyId=%s"
     cursor = db_conn.cursor()
-
-    if company_image_file.filename == "":
-        return "Please select a file"
-
+    
     try:
-        # # Check if the company exists
-        # check_sql = "SELECT * FROM company WHERE companyId = %s"
-        # cursor.execute(check_sql, (currentCompany,))
-        # existing_lecturer = cursor.fetchone()
+        # Check if the company exists
+        check_sql = "SELECT * FROM company WHERE companyId = %s"
+        cursor.execute(check_sql, (currentCompany,))
+        existing_company = cursor.fetchone()
 
-        # if not existing_lecturer:
-        #     return "Lecturer not found"
+        if not existing_company:
+            return "Company not found"
         
         cursor.execute(update_sql, (companyName, companyAbout, companyPhone, companyEmail, companyAddress, int(currentCompany)))
         db_conn.commit()
         
+        if company_image_file.filename != "" : 
+            # Update image file in S3
+            comp_image_file_name_in_s3 = "comp-id-" + str(currentCompany) + "_image_file"
+            s3 = boto3.resource('s3')
 
-        # Update image file in S3
-        comp_image_file_name_in_s3 = "comp-id-" + str(currentCompany) + "_image_file"
-        s3 = boto3.resource('s3')
+            try:
+                print("Updating company profile...")
+                s3.Bucket(custombucket).put_object(Key=comp_image_file_name_in_s3, Body=company_image_file)
+                bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+                s3_location = (bucket_location.get('LocationConstraint'))
 
-        try:
-            print("Updating company profile...")
-            s3.Bucket(custombucket).put_object(Key=comp_image_file_name_in_s3, Body=company_image_file)
-            bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
-            s3_location = (bucket_location.get('LocationConstraint'))
+                if s3_location is None:
+                    s3_location = ''
+                else:
+                    s3_location = '-' + s3_location
 
-            if s3_location is None:
-                s3_location = ''
-            else:
-                s3_location = '-' + s3_location
+                object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                    s3_location,
+                    custombucket,
+                    comp_image_file_name_in_s3)
 
-            object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-                s3_location,
-                custombucket,
-                comp_image_file_name_in_s3)
-
-        except Exception as e:
-            return str(e)
-
+            except Exception as e:
+                return str(e)
+            
     finally:
         cursor.close()
         print("Company profile updated successfully...")
-        return render_template('EditCompanyProfile.html')
+        return render_template('EditCompanyProfile.html', name=companyName)
 
 @app.route('/manage_company_profile')
 def manage_company_profile():
@@ -149,8 +146,7 @@ def manage_company_profile():
                                                  Params={'Bucket': bucket_name,
                                                          'Key': comp_image_file_name_in_s3},
                                                  ExpiresIn=7400)  # Adjust the expiration time as needed            
-            
-            return render_template('EditCompanyProfile.html',compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
+            return render_template('EditCompanyProfile.html', name=comp_name, compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
             
         except Exception as e:
             print(str(e))
