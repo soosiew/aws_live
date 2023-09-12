@@ -43,11 +43,3 @@ imageUpload.addEventListener('change', function() {
     }
     
 });
-
-var compLogoValue = "{{compLogo}}";
-
-// Check if compLogoValue has a value
-if (compLogoValue) {
-    // If it has a value, set the value of the input element to compLogoValue
-    document.getElementById('imageUpload').value = compLogoValue;
-}
