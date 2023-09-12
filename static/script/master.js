@@ -34,8 +34,11 @@ imageUpload.addEventListener('change', function() {
             // Set the src attribute of the image to the data URL
             companyLogo.src = event.target.result;
         };
-
         // Read the selected file as a data URL
         reader.readAsDataURL(selectedFile);
+    }
+    else {
+        // If no file is selected, set the src attribute to an empty string to remove the image
+        companyLogo.src = '';
     }
 });
