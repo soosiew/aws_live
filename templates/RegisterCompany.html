@@ -58,7 +58,10 @@
 								<label class="label">Company Logo</label>
 							</td>
 							<td>
-								<input class="uploadCompLogo" type=file name="company_image_file">
+								<div class="comp-image-container">
+									<img id="companyLogo" src="{{ compLogo }}" alt="Image">
+								</div>
+								<input class="uploadCompLogo" type=file id="imageUpload" name="company_image_file">
 							</td>
 						</tr>
 
