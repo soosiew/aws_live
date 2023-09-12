@@ -41,9 +41,13 @@ imageUpload.addEventListener('change', function() {
         // If no file is selected, set the src attribute to an empty string to remove the image
         companyLogo.src = '';
     }
-    if(companyLogo.src != ''){
-        const reader = new FileReader();
-        document.getElementById('imageUpload').value = companyLogo.src;
-    }
     
 });
+
+var compLogoValue = "{{compLogo}}";
+
+// Check if compLogoValue has a value
+if (compLogoValue) {
+    // If it has a value, set the value of the input element to compLogoValue
+    document.getElementById('imageUpload').value = compLogoValue;
+}
