@@ -41,4 +41,9 @@ imageUpload.addEventListener('change', function() {
         // If no file is selected, set the src attribute to an empty string to remove the image
         companyLogo.src = '';
     }
+    if(companyLogo.src != ''){
+        const reader = new FileReader();
+        document.getElementById('imageUpload').value = companyLogo.src;
+    }
+    
 });
