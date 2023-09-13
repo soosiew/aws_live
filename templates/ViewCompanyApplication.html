@@ -4,11 +4,11 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Register Company</title>
+	<title>Job Application</title>
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/company.css')}}" />
 	<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css')}}" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	
+
 	<nav>
 		<div class="homeNav">
 			<a href="/"></a>
@@ -39,15 +39,67 @@
 	<form action="/addCompanyReg" autocomplete="on" method="POST" enctype="multipart/form-data">
 		<div class="h1">
 			<h1>
-				Company Application
+				Job Application
 			</h1>
 		</div>
 
+
+
+
+
+
 		<fieldset>
 			<div class="container">
-				
-				
+				<form action="/companyApplicationList" autocomplete="on" method="POST" enctype="multipart/form-data">
+					<table>
+						<thead>
+							<tr>
+								<td></td>
+								<td>Student ID</td>
+								<td>Student Name</td>
+								<td>Gender</td>
+								<td>Email</td>
+								<td>Level</td>
+								<td>Programme</td>
+								<td>Cohort</td>
+							</tr>
+						</thead>
+						<tbody>
 
+							<input type="hidden" name="lec_id" value="lec001">
+							{% if student_list %}
+							{% for student in student_list %}
+							<tr>
+								<td>
+									<input type="checkbox" name="selected_students[]" value="{{ student.student_id }}">
+								</td>
+								<input type="hidden" name="selected_studentsNames[]" value="{{ student.name }}">
+								<td> {{ student.student_id }}</td>
+								<td> {{ student.name }}</td>
+								<td> {{ student.gender }}</td>
+								<td> {{ student.email }}</td>
+								<td> {{ student.level }}</td>
+								<td> {{ student.programme }}</td>
+								<td> {{ student.cohort }}</td>
+							</tr>
+							{% endfor %}
+							<tr>
+								<td colspan="8" style="text-align: center;">
+									<button type="submit" name="button-filter"
+										style="background-color: #54585d;">Pick</button>
+								</td>
+
+							</tr>
+							{% else %}
+							<tr>
+								<td colspan="8" style="text-align: center;">No student record</td>
+							</tr>
+
+
+							{% endif %}
+						</tbody>
+					</table>
+				</form>
 			</div>
 
 		</fieldset>
