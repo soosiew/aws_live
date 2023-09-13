@@ -375,6 +375,7 @@ def addJob():
         publish_date = current_datetime.strftime('%Y-%m-%d %H:%M:%S')       
         job_type = request.form['job_type']
         job_position = request.form['job_position']
+        qualification_level = request.form['qualification_level']
         job_description = request.form['job_description']
         job_requirement = request.form['job_requirement']
         job_location = request.form['job_location']
@@ -383,11 +384,11 @@ def addJob():
         job_industry = request.form['job_industry']
         company = int(session['logedInCompany'])
 
-        insert_sql = "INSERT INTO job VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        insert_sql = "INSERT INTO job VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
         cursor = db_conn.cursor()
 
         try:
-            cursor.execute(insert_sql, (job_id, publish_date, job_type, job_position, job_description, job_requirement, job_location, job_salary, job_openings, company, job_industry,))
+            cursor.execute(insert_sql, (job_id, publish_date, job_type, job_position, qualification_level, job_description, job_requirement, job_location, job_salary, job_openings, company, job_industry,))
             db_conn.commit()
                
         except Exception as e:
