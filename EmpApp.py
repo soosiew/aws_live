@@ -53,11 +53,80 @@ def publish_job():
     comp_name = data_company.get('comp_name', '')
     return render_template('PublishJob.html', name=comp_name)
 
-@app.route('/companyViewApplication')
+@app.route('/companyViewApplication', methods=['GET','POST'])
 def companyViewApplication():
     data_company = passCompSession().get_json()
     comp_name = data_company.get('comp_name', '')
     return render_template('ViewCompanyApplication.html', name=comp_name)
+
+
+def getCompanyJobApplication():
+    action=request.form['action']
+    id=request.form['studentId']
+
+    if action == 'drop':
+        select_sql = f"SELECT * FROM student WHERE supervisor LIKE '%{id}%'"
+        cursor = db_conn.cursor()
+
+    if action =='pickUp':
+        select_sql = f"SELECT * FROM student WHERE supervisor = ''"
+        cursor = db_conn.cursor()
+
+    try:
+        cursor.execute(select_sql)
+        students = cursor.fetchall()  # Fetch all students
+               
+        student_list = []
+
+        for student in students:
+            student_id = student[0]
+            name = student[1]
+            gender = student[4]
+            email = student[6]
+            level = student[7]
+            programme = student[8]
+            cohort = student[10]
+
+            # Fetch the S3 image URL based on student_id
+            stu_image_file_name_in_s3 = "stu-id-" + str(student_id) + "_image_file"
+            s3 = boto3.client('s3')
+            bucket_name = custombucket
+
+            try:
+                response = s3.generate_presigned_url('get_object',
+                                                     Params={'Bucket': bucket_name,
+                                                             'Key': stu_image_file_name_in_s3},
+                                                     ExpiresIn=1000)  # Adjust the expiration time as needed
+
+                # Create a dictionary for each student with their details and image URL
+                student_data = {
+                    "student_id": student_id,
+                    "name": name,
+                    "gender": gender,
+                    "email": email,
+                    "level": level,
+                    "programme": programme,
+                    "cohort": cohort,
+                }
+
+                # Append the student's dictionary to the student_list
+                student_list.append(student_data)
+                
+
+            except Exception as e:
+                return str(e)       
+         
+        if action == 'drop':
+         return render_template('DropStudent.html', student_list=student_list,id=id)
+
+        if action =='pickUp': 
+         return render_template('PickUpStudent.html', student_list=student_list)
+
+    except Exception as e:
+        return str(e)
+
+    finally:
+        cursor.close()
 
 @app.route('/companyViewManageJob')
 def companyViewManageJob():
