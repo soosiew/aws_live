@@ -590,7 +590,8 @@ def loginCompany():
                                 # Append the student's dictionary to the student_list
                                 # print(application_data)
                                 company_application_list.append(application_data)
-                            print("HAHA")    
+                            print("HAHA")  
+                        print("HOHO")  
                         # if action == 'drop':
                         #  return render_template('DropStudent.html', application_list=company_application_list,id=id)
 
