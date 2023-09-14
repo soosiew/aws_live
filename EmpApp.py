@@ -529,9 +529,9 @@ def loginCompany():
                         print(currentCompany)
                         cursor.execute(select_sql, (currentCompany,))
                         jobApplication = cursor.fetchall()  # Fetch all students
-
+                        
                         company_application_list = []
-                        print(application[0])
+                        
                         for application in jobApplication:
                             applicationId = application[0]
                             applicationDateTime = application[1]
