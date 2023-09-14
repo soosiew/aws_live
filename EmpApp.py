@@ -485,13 +485,13 @@ def loginCompany():
         try:
             cursor.execute(select_sql, (email,password,))
             company = cursor.fetchone()
-
+            
             if company: 
                 if company[7] != 'pending': 
                     session['logedInCompany'] = str(company[0])              
                     return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
                 else:
-                    return render_template('LoginCompany.html', msg="Registration status still in progress")
+                    return render_template('LoginCompany.html', msg="Registration still in progress")
         except Exception as e:
             return str(e)
         
