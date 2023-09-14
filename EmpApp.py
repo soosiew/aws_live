@@ -407,7 +407,7 @@ def addJob():
     
 @app.route("/loginCompany", methods=['GET','POST'])
 def loginCompany():
-    if request.method == 'POST':
+    # if request.method == 'POST':
         email = request.form['company_email']
         password = request.form['password']
 
@@ -513,7 +513,7 @@ def loginCompany():
         finally:   
             cursor.close()
         
-    return render_template('LoginCompany.html', msg="")
+    # return render_template('LoginCompany.html', msg="")
 
 @app.route("/loginAdmin", methods=['GET','POST'])
 def loginAdmin():
