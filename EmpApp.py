@@ -476,7 +476,7 @@ def loginCompany():
                                         "application_id" : applicationId,
                                         "application_datetime" : applicationDateTime,
                                         "application_status" : applicationStatus,
-                                        "student_id": stud_id,
+                                        "stud_id": stud_id,
                                         "stud_name": stud_name,
                                         "stud_phone": stud_phone,
                                         "stud_gender": stud_gender,
