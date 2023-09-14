@@ -30,7 +30,8 @@
 		thead td {
         	font-weight: bold;
     	}
-		tbody td{
+
+		.jobDisplay td{
 			font-weight: normal;
 		}
 	</style>
@@ -62,7 +63,7 @@
 								<td>Resume</td>					
 							</tr>
 						</thead>
-						<tbody>							
+						<tbody class="jobDisplay">							
 							{% if applicationData %}
 							{% for application in applicationData %}
 							<tr>
