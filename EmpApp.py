@@ -540,6 +540,7 @@ def loginCompany():
                             studentInfo = cursor.fetchall()
                             
                             stud_id = studentInfo[0]
+                            print(stud_id)
                             stud_name = studentInfo[1]
                             stud_phone = studentInfo[2]
                             stud_gender = studentInfo[3]
@@ -548,7 +549,6 @@ def loginCompany():
                             stud_level = studentInfo[6]
                             stud_programme = studentInfo[7]
                             stud_cohort = studentInfo[8]
-                            print(stud_cohort)
                             # Construct the S3 object key
                             object_key = f"{stud_id}_resume"
 
