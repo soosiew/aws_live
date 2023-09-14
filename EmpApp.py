@@ -556,6 +556,7 @@ def loginCompany():
                                 s3_client = boto3.client('s3')
 
                                 try:
+                                    print("HEREhere")
                                     response = s3_client.generate_presigned_url(
                                         'get_object',
                                         Params={
@@ -572,7 +573,7 @@ def loginCompany():
                                     #     return render_template('home.html')
                                     # else:
                                     #     return str(e)
-                                print("HERE")
+                                
                                 application_data = {
                                         "application_id" : applicationId,
                                         "application_datetime" : applicationDateTime,
