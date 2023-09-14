@@ -485,8 +485,9 @@ def loginCompany():
         try:
             cursor.execute(select_sql, (email,password,))
             company = cursor.fetchone()
-            
+
             if company: 
+                print(company[7])
                 if company[7] != 'pending': 
                     session['logedInCompany'] = str(company[0])              
                     return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
