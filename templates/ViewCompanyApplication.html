@@ -58,14 +58,9 @@
 							{% if applicationData %}
 							{% for application in applicationData %}
 							<tr>
-								<td>
-									
-								</td>
-								
-								<td> {{ application.application_id }}</td>
+								<td> {{ application.application_id }}  <br/>  {{application.application_datetime}} <br/>  {{application.application_status}}</td>
 								<td> {{ application.stud_id }}</td>
-								<td> {{ application.stud_cohort }}</td>
-								
+								<td> {{ application.stud_cohort }}</td>								
 							</tr>
 							{% endfor %}
 							<!-- <tr>
