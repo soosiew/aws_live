@@ -28,11 +28,11 @@
 	</nav>
 	<style>
 		.jobDisplay-head td {
-        	font-weight: bold;
+			font-weight: bold;
 			width: 20%;
-    	}
+		}
 
-		.jobDisplay-body td{
+		.jobDisplay-body td {
 			font-weight: normal;
 			width: 20%;
 		}
@@ -53,28 +53,37 @@
 				Job Application
 			</h1>
 		</div>
-		
+
 		<fieldset>
 			<div class="container">
 				<form action="/companyViewApplication" autocomplete="on" method="POST" enctype="multipart/form-data">
 					<table>
 						<thead>
 							<tr class="jobDisplay-head">
+								<td>num.</td>
 								<td>Job Application</td>
 								<td>Student</td>
 								<td>Resume</td>
-								<td>Action</td>					
+								<td>Action</td>
 							</tr>
 						</thead>
 
-						<tbody class="jobDisplay-body">							
+						<tbody class="jobDisplay-body">
 							{% if applicationData %}
-							{% for application in applicationData %}
+							{% for index, application in enumerate(applicationData) %}
 							<tr>
-								<td> {{ application.application_id }}  <br/><br/>  {{application.application_datetime}} <br/><br/>  {{application.application_status}}</td>
-								<td> {{ application.stud_id }} <br/><br/>  {{ application.stud_cohort }} </td>
+								<td>{{ index + 1 }}</td>
+								<td>
+									{{ application.application_id }}<br /><br />
+									{{ application.application_datetime }}<br /><br />
+									{{ application.application_status }}
+								</td>
+								<td>
+									{{ application.stud_id }}<br /><br />
+									{{ application.stud_cohort }}
+								</td>
 								<td></td>
-								<td> accept/ reject</td>								
+								<td>accept/reject</td>
 							</tr>
 							{% endfor %}
 							<!-- <tr>
