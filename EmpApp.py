@@ -522,12 +522,12 @@ def loginCompany():
                     session['logedInCompany'] = str(company[0])
 
                     currentCompany=str(session['logedInCompany'])
-                    select_sql = f"SELECT * FROM companyApplication ca JOIN job j ON ca.job = j.jobId WHERE j.company LIKE '%{id}%'"
+                    select_sql = f"SELECT * FROM companyApplication ca JOIN job j ON ca.job = j.jobId WHERE j.company LIKE '%{currentCompany}%'"
                     cursor = db_conn.cursor()
 
                     try:
                         print(currentCompany + "heree")
-                        cursor.execute(select_sql, (currentCompany,))
+                        cursor.execute(select_sql)
                         print("hihi1")
                         jobApplication = cursor.fetchall()  # Fetch all students
                         print("hihi2")
@@ -538,9 +538,9 @@ def loginCompany():
                             applicationDateTime = application[1]
                             applicationStatus = application[2]
 
-                            select_sql = f"SELECT s.studentId, s.studentName, s.mobileNumber, s.gender, s.address, s.email, s.level, s.programme FROM student s JOIN companyApplication ca ON s.studentId = ca.student WHERE ca.applicationId LIKE '%{id}%'"
+                            select_sql = f"SELECT s.studentId, s.studentName, s.mobileNumber, s.gender, s.address, s.email, s.level, s.programme FROM student s JOIN companyApplication ca ON s.studentId = ca.student WHERE ca.applicationId LIKE '%{currentCompany}%'"
                             cursor = db_conn.cursor()
-                            cursor.execute(select_sql, (applicationId,))
+                            cursor.execute(select_sql)
                             studentInfo = cursor.fetchall()
                             
                             stud_id = studentInfo[0]
