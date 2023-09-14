@@ -490,9 +490,7 @@ def loginCompany():
 
                                 # Append the student's dictionary to the student_list
                                 # print(application_data)
-                                company_application_list.append(application_data)
-                            print("HAHA")  
-                        print("HOHO")  
+                                company_application_list.append(application_data)  
                         # if action == 'drop':
                         #  return render_template('DropStudent.html', application_list=company_application_list,id=id)
 
@@ -501,20 +499,6 @@ def loginCompany():
                         return render_template('ViewCompanyApplication.html',id = session['logedInCompany'], name=company[2], applicationData = company_application_list)
                     except Exception as e:
                         return str(e)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     # return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
                 else:

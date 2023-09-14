@@ -45,7 +45,7 @@
 		
 		<fieldset>
 			<div class="container">
-				<form action="/companyViewApplication" autocomplete="on" method="POST" enctype="multipart/form-data">
+				<!-- <form action="/companyViewApplication" autocomplete="on" method="POST" enctype="multipart/form-data"> -->
 					<table>
 						<thead>
 							<tr>
@@ -57,19 +57,19 @@
 						<tbody>
 
 							<!-- <input type="hidden" name="lec_id" value="lec001"> -->
-							{% if applicationData %}
-							{% for application in applicationData %}
+							<!-- {% if applicationData %}
+							{% for application in applicationData %} -->
 							<tr>
 								<!-- <td>
 									<input type="checkbox" name="selected_students[]" value="{{ student.student_id }}">
 								</td>
 								<input type="hidden" name="selected_studentsNames[]" value="{{ student.name }}"> -->
-								<td> {{ application.application_id }}</td>
+								<!-- <td> {{ application.application_id }}</td>
 								<td> {{ application.student_id }}</td>
-								<td> {{ application.stud_cohort }}</td>
+								<td> {{ application.stud_cohort }}</td> -->
 								
 							</tr>
-							{% endfor %}
+							<!-- {% endfor %} -->
 							<!-- <tr>
 								<td colspan="8" style="text-align: center;">
 									<button type="submit" name="button-filter"
@@ -77,14 +77,14 @@
 								</td>
 
 							</tr> -->
-							{% else %}
+							<!-- {% else %} -->
 							<tr>
 								<td colspan="8" style="text-align: center;">No student record</td>
 							</tr>
-							{% endif %}
+							<!-- {% endif %} -->
 						</tbody>
 					</table>
-				</form>
+				<!-- </form> -->
 			</div>
 
 		</fieldset>
