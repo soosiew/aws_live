@@ -435,7 +435,7 @@ def loginCompany():
                             applicationDateTime = application[1]
                             applicationStatus = application[2]
 
-                            select_sql = f"SELECT s.studentId, s.studentName, s.mobileNumber, s.gender, s.address, s.email, s.level, s.programme, s.cohort FROM student s JOIN companyApplication ca ON s.studentId = ca.student WHERE ca.applicationId LIKE '%{currentCompany}%'"
+                            select_sql = f"SELECT s.studentId, s.studentName, s.mobileNumber, s.gender, s.address, s.email, s.level, s.programme, s.cohort FROM student s JOIN companyApplication ca ON s.studentId LIKE ca.student WHERE ca.applicationId LIKE '%{currentCompany}%'"
                             cursor = db_conn.cursor()
                             cursor.execute(select_sql)
                             studentInfo = cursor.fetchall()
@@ -497,8 +497,8 @@ def loginCompany():
                         # if action =='pickUp': 
                         #  return render_template('PickUpStudent.html', application_list=company_application_list)
                         print(company_application_list)
-                        return render_template('home.html')
-                        # return render_template('ViewCompanyApplication.html',id = session['logedInCompany'], name=company[2], applicationData = company_application_list)
+                        # return render_template('home.html')
+                        return render_template('ViewCompanyApplication.html',id = session['logedInCompany'], name=company[2], applicationData = company_application_list)
                     except Exception as e:
                         return str(e)
 
