@@ -482,20 +482,20 @@ def loginCompany():
         select_sql = "SELECT * FROM company WHERE email = %s AND password = %s"
         cursor = db_conn.cursor()
 
-        if company[7] != 'pending':
-            try:
-                cursor.execute(select_sql, (email,password,))
-                company = cursor.fetchone()
-                
-                if company:  
+        try:
+            cursor.execute(select_sql, (email,password,))
+            company = cursor.fetchone()
+            
+            if company: 
+                if company[7] != 'pending': 
                     session['logedInCompany'] = str(company[0])              
                     return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
-                
-            except Exception as e:
-                return str(e)
             
-            finally:   
-                cursor.close()
+        except Exception as e:
+            return str(e)
+        
+        finally:   
+            cursor.close()
         
     return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password/ Registration status still in progress")
 
