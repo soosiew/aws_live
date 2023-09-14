@@ -534,7 +534,7 @@ def loginCompany():
                             applicationDateTime = application[1]
                             applicationStatus = application[2]
 
-                            select_sql = f"SELECT s.studentId, s.studentName, s.mobileNumber, s.gender, s.address, s.email, s.level, s.programme. s.cohort FROM student s JOIN companyApplication ca ON s.studentId = ca.student WHERE ca.applicationId LIKE '%{currentCompany}%'"
+                            select_sql = f"SELECT s.studentId, s.studentName, s.mobileNumber, s.gender, s.address, s.email, s.level, s.programme, s.cohort FROM student s JOIN companyApplication ca ON s.studentId = ca.student WHERE ca.applicationId LIKE '%{currentCompany}%'"
                             cursor = db_conn.cursor()
                             cursor.execute(select_sql)
                             studentInfo = cursor.fetchall()
