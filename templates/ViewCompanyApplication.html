@@ -60,16 +60,19 @@
 							<tr>
 								<td>Job Application</td>
 								<td>Student</td>
-								<td>Resume</td>					
+								<td>Resume</td>
+								<td>Action</td>					
 							</tr>
 						</thead>
+
 						<tbody class="jobDisplay">							
 							{% if applicationData %}
 							{% for application in applicationData %}
 							<tr>
-								<td> {{ application.application_id }}  <br/>  {{application.application_datetime}} <br/>  {{application.application_status}}</td>
-								<td> {{ application.stud_id }} </td>
-								<td> {{ application.stud_cohort }}</td>								
+								<td> {{ application.application_id }}  <br/><br/>  {{application.application_datetime}} <br/><br/>  {{application.application_status}}</td>
+								<td> {{ application.stud_id }} <br/><br/>  {{ application.stud_cohort }} </td>
+								<td></td>
+								<td> accept/ reject</td>								
 							</tr>
 							{% endfor %}
 							<!-- <tr>
@@ -77,7 +80,6 @@
 									<button type="submit" name="button-filter"
 										style="background-color: #54585d;">Pick</button>
 								</td>
-
 							</tr> -->
 							{% else %}
 							<tr>
