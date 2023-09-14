@@ -56,17 +56,17 @@
 						</thead>
 						<tbody>
 
-							<!-- <input type="hidden" name="lec_id" value="lec001"> -->
+							
 							{% if applicationData %}
 							{% for application in applicationData %}
 							<tr>
-								<!-- <td>
+								<td>
 									<input type="checkbox" name="selected_students[]" value="{{ student.student_id }}">
 								</td>
-								<input type="hidden" name="selected_studentsNames[]" value="{{ student.name }}"> -->
-								<!-- <td> {{ application.application_id }}</td>
+								<input type="hidden" name="selected_studentsNames[]" value="{{ student.name }}">
+								<td> {{ application.application_id }}</td>
 								<td> {{ application.stud_id }}</td>
-								<td> {{ application.stud_cohort }}</td> -->
+								<td> {{ application.stud_cohort }}</td>
 								
 							</tr>
 							{% endfor %}
