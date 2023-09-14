@@ -70,9 +70,10 @@
 
 						<tbody class="jobDisplay-body">
 							{% if applicationData %}
-							{% for index, application in enumerate(applicationData) %}
+							{% set row_number = 1 %}
+							{% for application in applicationData %}
 							<tr>
-								<td>{{ index + 1 }}</td>
+								<td>{{ row_number }}</td>
 								<td>
 									{{ application.application_id }}<br /><br />
 									{{ application.application_datetime }}<br /><br />
@@ -85,6 +86,7 @@
 								<td></td>
 								<td>accept/reject</td>
 							</tr>
+							{% set row_number = row_number + 1 %}
 							{% endfor %}
 							<!-- <tr>
 								<td colspan="8" style="text-align: center;">
