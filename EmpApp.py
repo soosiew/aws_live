@@ -1,10 +1,11 @@
-from flask import Flask, render_template, request, session, Response, jsonify
+from flask import Flask, render_template, request, session, Response, jsonify, redirect
 from pymysql import connections
 import os
 import boto3
 import datetime
 import base64
 from config import *
+from botocore.exceptions import ClientError
 
 app = Flask(__name__)
 app.secret_key = "CC"
@@ -61,71 +62,99 @@ def companyViewApplication():
 
 def getCompanyJobApplication():
     action=request.form['action']
-    id=request.form['studentId']
+    currentCompany=str(session['logedInCompany'])
+    select_sql = f"SELECT * FROM companyApplication ca JOIN job j ON ca.job = j.jobId WHERE j.company = '%{id}%'"
+    cursor = db_conn.cursor()
 
-    if action == 'drop':
-        select_sql = f"SELECT * FROM student WHERE supervisor LIKE '%{id}%'"
-        cursor = db_conn.cursor()
+    # if action == 'drop':
+    #     select_sql = f"SELECT * FROM companyApplication ca JOIN job j ON ca.job = j.jobId WHERE j.company = '%{id}%'"
+    #     cursor = db_conn.cursor()
 
-    if action =='pickUp':
-        select_sql = f"SELECT * FROM student WHERE supervisor = ''"
-        cursor = db_conn.cursor()
+    # if action =='pickUp':
+    #     select_sql = f"SELECT * FROM companyApplication ca JOIN job j ON ca.job = j.jobId WHERE j.company = '%{id}%'"
+    #     cursor = db_conn.cursor()
 
     try:
-        cursor.execute(select_sql)
-        students = cursor.fetchall()  # Fetch all students
+        cursor.execute(select_sql, (currentCompany,))
+        jobApplication = cursor.fetchall()  # Fetch all students
 
-        student_list = []
+        company_application_list = []
 
-        for student in students:
-            student_id = student[0]
-            name = student[1]
-            gender = student[4]
-            email = student[6]
-            level = student[7]
-            programme = student[8]
-            cohort = student[10]
+        for application in jobApplication:
+            applicationId = application[0]
+            applicationDateTime = application[1]
+            applicationStatus = application[2]
 
-            # Fetch the S3 image URL based on student_id
-            stu_image_file_name_in_s3 = "stu-id-" + str(student_id) + "_image_file"
-            s3 = boto3.client('s3')
-            bucket_name = custombucket
+            select_sql = f"SELECT s.studentId, s.studentName, s.mobileNumber, s.gender, s.address, s.email, s.level, s.programme FROM student s JOIN companyApplication ca ON s.studentId = ca.student WHERE ca.applicationId = '%{id}%'"
+            cursor = db_conn.cursor()
+            cursor.execute(select_sql, (applicationId,))
+            studentInfo = cursor.fetchall()
+            
+            stud_id = studentInfo[0]
+            stud_name = studentInfo[1]
+            stud_phone = studentInfo[2]
+            stud_gender = studentInfo[3]
+            stud_address = studentInfo[4]
+            stud_email = studentInfo[5]
+            stud_level = studentInfo[6]
+            stud_programme = studentInfo[7]
+            stud_cohort = studentInfo[8]
+            
+            # Construct the S3 object key
+            object_key = f"{stud_id}_resume"
+
+            # Generate a presigned URL for the S3 object
+            s3_client = boto3.client('s3')
 
             try:
-                response = s3.generate_presigned_url('get_object',
-                                                     Params={'Bucket': bucket_name,
-                                                             'Key': stu_image_file_name_in_s3},
-                                                     ExpiresIn=1000)  # Adjust the expiration time as needed
-
-                # Create a dictionary for each student with their details and image URL
-                student_data = {
-                    "student_id": student_id,
-                    "name": name,
-                    "gender": gender,
-                    "email": email,
-                    "level": level,
-                    "programme": programme,
-                    "cohort": cohort,
+                response = s3_client.generate_presigned_url(
+                    'get_object',
+                    Params={
+                        'Bucket': custombucket,
+                        'Key': object_key,
+                        'ResponseContentDisposition': 'inline',
+                    },
+                    ExpiresIn=3600  # Set the expiration time (in seconds) as needed
+                )
+            except ClientError as e:
+                return str(e)
+                # if e.response['Error']['Code'] == 'NoSuchKey':
+                #     # If the resume does not exist, return a page with a message
+                #     return render_template('home.html')
+                # else:
+                #     return str(e)
+                
+            application_data = {
+                    "application_id" : applicationId,
+                    "application_datetime" : applicationDateTime,
+                    "application_status" : applicationStatus,
+                    "student_id": stud_id,
+                    "stud_name": stud_name,
+                    "stud_phone": stud_phone,
+                    "stud_gender": stud_gender,
+                    "stud_email": stud_email,
+                    "stud_level": stud_level,
+                    "stud_programme": stud_programme,
+                    "stud_cohort": stud_cohort,
+                    "stud_resume": response,
                 }
 
-                # Append the student's dictionary to the student_list
-                student_list.append(student_data)
-                
-
-            except Exception as e:
-                return str(e)       
+            # Append the student's dictionary to the student_list
+            company_application_list.append(application_data)
          
-        if action == 'drop':
-         return render_template('DropStudent.html', student_list=student_list,id=id)
+        # if action == 'drop':
+        #  return render_template('DropStudent.html', application_list=company_application_list,id=id)
 
-        if action =='pickUp': 
-         return render_template('PickUpStudent.html', student_list=student_list)
-
+        # if action =='pickUp': 
+        #  return render_template('PickUpStudent.html', application_list=company_application_list)
+        return render_template('ViewCompanyApplication.html',applicationData = company_application_list)
     except Exception as e:
         return str(e)
 
     finally:
         cursor.close()
+
+
 
 @app.route('/companyViewManageJob')
 def companyViewManageJob():
@@ -135,7 +164,6 @@ def companyViewManageJob():
 
 @app.route('/login_company')
 def login_company():
-    
     return render_template('LoginCompany.html')
 
 def passCompSession():
@@ -492,13 +520,15 @@ def loginCompany():
                     return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
                 else:
                     return render_template('LoginCompany.html', msg="Registration still in progress")
+            else:
+                return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password")
         except Exception as e:
             return str(e)
         
         finally:   
             cursor.close()
         
-    return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password")
+    return render_template('LoginCompany.html', msg="")
 
 @app.route("/loginAdmin", methods=['GET','POST'])
 def loginAdmin():
