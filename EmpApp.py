@@ -528,10 +528,11 @@ def loginCompany():
                     try:
                         print(currentCompany + "heree")
                         cursor.execute(select_sql, (currentCompany,))
+                        print("hihi1")
                         jobApplication = cursor.fetchall()  # Fetch all students
-                        print(jobApplication[0])
+                        print("hihi2")
                         company_application_list = []
-                        
+                        print("hihi3")
                         for application in jobApplication:
                             applicationId = application[0]
                             applicationDateTime = application[1]
