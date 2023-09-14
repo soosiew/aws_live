@@ -539,9 +539,11 @@ def loginCompany():
                             cursor.execute(select_sql)
                             studentInfo = cursor.fetchall()
                             
+                            print("hihi")
                             stud_id = studentInfo[0]
                             print(stud_id)
                             stud_name = studentInfo[1]
+                            print(stud_name)
                             stud_phone = studentInfo[2]
                             stud_gender = studentInfo[3]
                             stud_address = studentInfo[4]
