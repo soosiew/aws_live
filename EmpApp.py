@@ -550,8 +550,8 @@ def loginCompany():
                                 stud_programme = student[7]
                                 stud_cohort = student[8]
                                 # Construct the S3 object key
-                                object_key = f"{stud_id}_resume"
-
+                                object_key = str(stud_id) + "_resume"
+                                
                                 # Generate a presigned URL for the S3 object
                                 s3_client = boto3.client('s3')
 
