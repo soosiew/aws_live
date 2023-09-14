@@ -549,17 +549,12 @@ def loginCompany():
                                 stud_email = student[5]
                                 stud_level = student[6]
                                 stud_programme = student[7]
-                                print(stud_programme)
                                 stud_cohort = student[8]
-                                print(stud_cohort)
                                 # Construct the S3 object key
                                 object_key = str(stud_id) + "_resume"
-                                print("HERE")
                                 # Generate a presigned URL for the S3 object
                                 s3_client = boto3.client('s3')
-                                print("HERE1")
                                 try:
-                                    print("HEREhere")
                                     response = s3_client.generate_presigned_url(
                                         'get_object',
                                         Params={
@@ -594,7 +589,7 @@ def loginCompany():
                                     }
 
                                 # Append the student's dictionary to the student_list
-                                print(applicationId)
+                                print("hihi" + applicationId)
                                 company_application_list.append(application_data)
                         
                         # if action == 'drop':
