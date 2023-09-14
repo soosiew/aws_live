@@ -58,7 +58,6 @@ def publish_job():
 def companyViewApplication():
     data_company = passCompSession().get_json()
     comp_name = data_company.get('comp_name', '')
-    print("COMPANYVIEWAPPLICATION")
     # return render_template('ViewCompanyApplication.html', name=comp_name)
 
 # def getCompanyJobApplication():
@@ -591,7 +590,7 @@ def loginCompany():
                                 # Append the student's dictionary to the student_list
                                 # print(application_data)
                                 company_application_list.append(application_data)
-                                
+                            print("HAHA")    
                         # if action == 'drop':
                         #  return render_template('DropStudent.html', application_list=company_application_list,id=id)
 
