@@ -551,10 +551,10 @@ def loginCompany():
                                 stud_cohort = student[8]
                                 # Construct the S3 object key
                                 object_key = str(stud_id) + "_resume"
-                                
+
                                 # Generate a presigned URL for the S3 object
                                 s3_client = boto3.client('s3')
-
+                                print("HERE1")
                                 try:
                                     print("HEREhere")
                                     response = s3_client.generate_presigned_url(
