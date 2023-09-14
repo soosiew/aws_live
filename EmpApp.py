@@ -61,7 +61,7 @@ def companyViewApplication():
     # return render_template('ViewCompanyApplication.html', name=comp_name)
 
 # def getCompanyJobApplication():
-    action=request.form['action']
+    # action=request.form['action']
     currentCompany=str(session['logedInCompany'])
     select_sql = f"SELECT * FROM companyApplication ca JOIN job j ON ca.job = j.jobId WHERE j.company = '%{id}%'"
     cursor = db_conn.cursor()
@@ -75,6 +75,7 @@ def companyViewApplication():
     #     cursor = db_conn.cursor()
 
     try:
+        print(currentCompany)
         cursor.execute(select_sql, (currentCompany,))
         jobApplication = cursor.fetchall()  # Fetch all students
 
