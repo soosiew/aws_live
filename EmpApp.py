@@ -548,7 +548,9 @@ def loginCompany():
                                 stud_email = student[5]
                                 stud_level = student[6]
                                 stud_programme = student[7]
+                                print(stud_programme)
                                 stud_cohort = student[8]
+                                print(stud_cohort)
                                 # Construct the S3 object key
                                 object_key = str(stud_id) + "_resume"
                                 print("HERE")
