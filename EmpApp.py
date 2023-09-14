@@ -542,14 +542,15 @@ def loginCompany():
                             for student in studentInfo:
                                 stud_id = student[0]
                                 stud_name = student[1]
-                                stud_phone = student[2]
-                                stud_gender = student[3]
-                                stud_address = student[4]
-                                stud_email = student[5]
-                                stud_level = student[6]
-                                stud_programme = student[7]
+                                
+                                stud_phone = student[3]
+                                stud_gender = student[4]
+                                stud_address = student[5]
+                                stud_email = student[6]
+                                stud_level = student[7]
+                                stud_programme = student[8]
                                 print(stud_programme)
-                                stud_cohort = student[8]
+                                stud_cohort = student[10]
                                 print(stud_cohort)
                                 # Construct the S3 object key
                                 object_key = str(stud_id) + "_resume"
