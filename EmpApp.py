@@ -526,13 +526,9 @@ def loginCompany():
                     cursor = db_conn.cursor()
 
                     try:
-                        print(currentCompany + "heree")
                         cursor.execute(select_sql)
-                        print("hihi1")
                         jobApplication = cursor.fetchall()  # Fetch all students
-                        print("hihi2")
                         company_application_list = []
-                        print("hihi3")
                         for application in jobApplication:
                             applicationId = application[0]
                             applicationDateTime = application[1]
@@ -552,7 +548,7 @@ def loginCompany():
                             stud_level = studentInfo[6]
                             stud_programme = studentInfo[7]
                             stud_cohort = studentInfo[8]
-                            
+                            print(stud_cohort)
                             # Construct the S3 object key
                             object_key = f"{stud_id}_resume"
 
