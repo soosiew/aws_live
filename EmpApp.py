@@ -526,7 +526,7 @@ def loginCompany():
                     cursor = db_conn.cursor()
 
                     try:
-                        print(currentCompany)
+                        print(currentCompany + "heree")
                         cursor.execute(select_sql, (currentCompany,))
                         jobApplication = cursor.fetchall()  # Fetch all students
                         
