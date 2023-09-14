@@ -59,7 +59,6 @@ def companyViewApplication():
     comp_name = data_company.get('comp_name', '')
     return render_template('ViewCompanyApplication.html', name=comp_name)
 
-
 def getCompanyJobApplication():
     action=request.form['action']
     id=request.form['studentId']
@@ -75,7 +74,7 @@ def getCompanyJobApplication():
     try:
         cursor.execute(select_sql)
         students = cursor.fetchall()  # Fetch all students
-               
+
         student_list = []
 
         for student in students:
@@ -136,6 +135,7 @@ def companyViewManageJob():
 
 @app.route('/login_company')
 def login_company():
+    
     return render_template('LoginCompany.html')
 
 def passCompSession():
@@ -482,21 +482,22 @@ def loginCompany():
         select_sql = "SELECT * FROM company WHERE email = %s AND password = %s"
         cursor = db_conn.cursor()
 
-        try:
-            cursor.execute(select_sql, (email,password,))
-            company = cursor.fetchone()
-
-            if company:  
-                session['logedInCompany'] = str(company[0])
-                return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
+        if company[7] != 'pending':
+            try:
+                cursor.execute(select_sql, (email,password,))
+                company = cursor.fetchone()
+                
+                if company:  
+                    session['logedInCompany'] = str(company[0])              
+                    return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
+                
+            except Exception as e:
+                return str(e)
             
-        except Exception as e:
-            return str(e)
+            finally:   
+                cursor.close()
         
-        finally:   
-            cursor.close()
-        
-    return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password")
+    return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password/ Registration status still in progress")
 
 @app.route("/loginAdmin", methods=['GET','POST'])
 def loginAdmin():
