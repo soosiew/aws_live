@@ -132,6 +132,7 @@ def getCompanyJobApplication():
                     "stud_name": stud_name,
                     "stud_phone": stud_phone,
                     "stud_gender": stud_gender,
+                    "stud_address": stud_address,
                     "stud_email": stud_email,
                     "stud_level": stud_level,
                     "stud_programme": stud_programme,
@@ -140,6 +141,7 @@ def getCompanyJobApplication():
                 }
 
             # Append the student's dictionary to the student_list
+            print(applicationId)
             company_application_list.append(application_data)
          
         # if action == 'drop':
