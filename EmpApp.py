@@ -496,9 +496,9 @@ def loginCompany():
 
                         # if action =='pickUp': 
                         #  return render_template('PickUpStudent.html', application_list=company_application_list)
-                        return render_template('ViewCompanyApplication.html',id = session['logedInCompany'], name=company[2], applicationData = company_application_list)
-                    except Exception as e:
-                        return str(e)
+                    return render_template('ViewCompanyApplication.html',id = session['logedInCompany'], name=company[2], applicationData = company_application_list)
+                    # except Exception as e:
+                    #     return str(e)
 
                     # return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
                 else:
