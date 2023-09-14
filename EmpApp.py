@@ -54,7 +54,7 @@ def publish_job():
     comp_name = data_company.get('comp_name', '')
     return render_template('PublishJob.html', name=comp_name)
 
-@app.route('/companyViewApplication', methods=['GET'])
+@app.route('/companyViewApplication', methods=['POST'])
 def companyViewApplication():
     data_company = passCompSession().get_json()
     comp_name = data_company.get('comp_name', '')
