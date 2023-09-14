@@ -58,9 +58,9 @@ def publish_job():
 def companyViewApplication():
     data_company = passCompSession().get_json()
     comp_name = data_company.get('comp_name', '')
-    return render_template('ViewCompanyApplication.html', name=comp_name)
+    # return render_template('ViewCompanyApplication.html', name=comp_name)
 
-def getCompanyJobApplication():
+# def getCompanyJobApplication():
     action=request.form['action']
     currentCompany=str(session['logedInCompany'])
     select_sql = f"SELECT * FROM companyApplication ca JOIN job j ON ca.job = j.jobId WHERE j.company = '%{id}%'"
@@ -149,7 +149,7 @@ def getCompanyJobApplication():
 
         # if action =='pickUp': 
         #  return render_template('PickUpStudent.html', application_list=company_application_list)
-        return render_template('ViewCompanyApplication.html',applicationData = company_application_list)
+        return render_template('ViewCompanyApplication.html',name=comp_name, applicationData = company_application_list)
     except Exception as e:
         return str(e)
 
