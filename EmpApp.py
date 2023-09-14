@@ -500,18 +500,13 @@ def loginCompany():
                     # return render_template('home.html')
                     return render_template('ViewCompanyApplication.html',id = session['logedInCompany'], name=company[2], applicationData = company_application_list)
                 except Exception as e:
-                    return render_template('ViewCompanyApplication.html',id = session['logedInCompany'], name=company[2], applicationData = company_application_list)
-                    return "hoho"
-
-                # return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
+                    return str(e)
             else:
                 return render_template('LoginCompany.html', msg="Registration still in progress")
         else:
             return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password")
     except Exception as e:
-        return render_template('ViewCompanyApplication.html',id = session['logedInCompany'], name=company[2], applicationData = company_application_list)
-        # return str(e)
-    
+        return str(e)
     finally:   
         cursor.close()
         
