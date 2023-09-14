@@ -542,7 +542,6 @@ def loginCompany():
                             for student in studentInfo:
                                 stud_id = student[0]
                                 stud_name = student[1]
-                                print(stud_name)
                                 stud_phone = student[2]
                                 stud_gender = student[3]
                                 stud_address = student[4]
@@ -589,9 +588,9 @@ def loginCompany():
                                     }
 
                                 # Append the student's dictionary to the student_list
-                                print("hihi" + applicationId)
+                                print(application_data)
                                 company_application_list.append(application_data)
-                        
+                                
                         # if action == 'drop':
                         #  return render_template('DropStudent.html', application_list=company_application_list,id=id)
 
