@@ -487,18 +487,18 @@ def loginCompany():
             company = cursor.fetchone()
 
             if company: 
-                print(company[7])
                 if company[7] != 'pending': 
                     session['logedInCompany'] = str(company[0])              
                     return render_template('ViewCompanyApplication.html', id = session['logedInCompany'], name = company[2])
-            
+                else:
+                    return render_template('LoginCompany.html', msg="Registration status still in progress")
         except Exception as e:
             return str(e)
         
         finally:   
             cursor.close()
         
-    return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password/ Registration status still in progress")
+    return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password")
 
 @app.route("/loginAdmin", methods=['GET','POST'])
 def loginAdmin():
