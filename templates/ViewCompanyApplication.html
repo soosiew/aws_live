@@ -27,6 +27,11 @@
 		</div>
 	</nav>
 	<style>
+		.jobDisplay-table{
+			border: none;
+			border-bottom: 0.5px solid black;
+		}
+
 		.jobDisplay-head td {
 			font-weight: bold;
 			width: 20%;
@@ -57,7 +62,7 @@
 		<fieldset>
 			<div class="container">
 				<form action="/companyViewApplication" autocomplete="on" method="POST" enctype="multipart/form-data">
-					<table>
+					<table class="jobDisplay-table">
 						<thead>
 							<tr class="jobDisplay-head">
 								<td>num.</td>
