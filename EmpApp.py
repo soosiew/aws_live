@@ -541,9 +541,7 @@ def loginCompany():
                             
                             for student in studentInfo:
                                 stud_id = student[0]
-                                print(stud_id)
                                 stud_name = student[1]
-                                print(stud_name)
                                 stud_phone = student[2]
                                 stud_gender = student[3]
                                 stud_address = student[4]
@@ -574,7 +572,7 @@ def loginCompany():
                                     #     return render_template('home.html')
                                     # else:
                                     #     return str(e)
-                                    
+                                print("HERE")
                                 application_data = {
                                         "application_id" : applicationId,
                                         "application_datetime" : applicationDateTime,
