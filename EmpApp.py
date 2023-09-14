@@ -539,61 +539,59 @@ def loginCompany():
                             cursor.execute(select_sql)
                             studentInfo = cursor.fetchall()
                             
-                            print("hihi")
-                            stud_id = studentInfo[0]
-                            print(stud_id)
-                            stud_name = studentInfo[1]
-                            print(stud_name)
-                            stud_phone = studentInfo[2]
-                            stud_gender = studentInfo[3]
-                            stud_address = studentInfo[4]
-                            stud_email = studentInfo[5]
-                            stud_level = studentInfo[6]
-                            stud_programme = studentInfo[7]
-                            stud_cohort = studentInfo[8]
-                            # Construct the S3 object key
-                            object_key = f"{stud_id}_resume"
+                            for student in studentInfo:
+                                stud_id = student[0]
+                                stud_name = student[1]
+                                stud_phone = student[2]
+                                stud_gender = student[3]
+                                stud_address = student[4]
+                                stud_email = student[5]
+                                stud_level = student[6]
+                                stud_programme = student[7]
+                                stud_cohort = student[8]
+                                # Construct the S3 object key
+                                object_key = f"{stud_id}_resume"
 
-                            # Generate a presigned URL for the S3 object
-                            s3_client = boto3.client('s3')
+                                # Generate a presigned URL for the S3 object
+                                s3_client = boto3.client('s3')
 
-                            try:
-                                response = s3_client.generate_presigned_url(
-                                    'get_object',
-                                    Params={
-                                        'Bucket': custombucket,
-                                        'Key': object_key,
-                                        'ResponseContentDisposition': 'inline',
-                                    },
-                                    ExpiresIn=3600  # Set the expiration time (in seconds) as needed
-                                )
-                            except ClientError as e:
-                                return str(e)
-                                # if e.response['Error']['Code'] == 'NoSuchKey':
-                                #     # If the resume does not exist, return a page with a message
-                                #     return render_template('home.html')
-                                # else:
-                                #     return str(e)
-                                
-                            application_data = {
-                                    "application_id" : applicationId,
-                                    "application_datetime" : applicationDateTime,
-                                    "application_status" : applicationStatus,
-                                    "student_id": stud_id,
-                                    "stud_name": stud_name,
-                                    "stud_phone": stud_phone,
-                                    "stud_gender": stud_gender,
-                                    "stud_address": stud_address,
-                                    "stud_email": stud_email,
-                                    "stud_level": stud_level,
-                                    "stud_programme": stud_programme,
-                                    "stud_cohort": stud_cohort,
-                                    "stud_resume": response,
-                                }
+                                try:
+                                    response = s3_client.generate_presigned_url(
+                                        'get_object',
+                                        Params={
+                                            'Bucket': custombucket,
+                                            'Key': object_key,
+                                            'ResponseContentDisposition': 'inline',
+                                        },
+                                        ExpiresIn=3600  # Set the expiration time (in seconds) as needed
+                                    )
+                                except ClientError as e:
+                                    return str(e)
+                                    # if e.response['Error']['Code'] == 'NoSuchKey':
+                                    #     # If the resume does not exist, return a page with a message
+                                    #     return render_template('home.html')
+                                    # else:
+                                    #     return str(e)
+                                    
+                                application_data = {
+                                        "application_id" : applicationId,
+                                        "application_datetime" : applicationDateTime,
+                                        "application_status" : applicationStatus,
+                                        "student_id": stud_id,
+                                        "stud_name": stud_name,
+                                        "stud_phone": stud_phone,
+                                        "stud_gender": stud_gender,
+                                        "stud_address": stud_address,
+                                        "stud_email": stud_email,
+                                        "stud_level": stud_level,
+                                        "stud_programme": stud_programme,
+                                        "stud_cohort": stud_cohort,
+                                        "stud_resume": response,
+                                    }
 
-                            # Append the student's dictionary to the student_list
-                            print(applicationId)
-                            company_application_list.append(application_data)
+                                # Append the student's dictionary to the student_list
+                                print(applicationId)
+                                company_application_list.append(application_data)
                         
                         # if action == 'drop':
                         #  return render_template('DropStudent.html', application_list=company_application_list,id=id)
