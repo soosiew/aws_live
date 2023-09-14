@@ -434,6 +434,7 @@ def loginCompany():
                         applicationId = application[0]
                         applicationDateTime = application[1]
                         applicationStatus = application[2]
+                        applicationJob = application[4]
 
                         select_sql = f"SELECT s.studentId, s.studentName, s.mobileNumber, s.gender, s.address, s.email, s.level, s.programme, s.cohort FROM student s JOIN companyApplication ca ON s.studentId LIKE ca.student WHERE ca.applicationId LIKE '%{currentCompany}%'"
                         cursor = db_conn.cursor()
@@ -451,27 +452,35 @@ def loginCompany():
                             stud_programme = student[7]
                             stud_cohort = student[8]
                             # Construct the S3 object key
-                            object_key = str(stud_id) + "_resume"
-                            # Generate a presigned URL for the S3 object
-                            s3_client = boto3.client('s3')
-                            try:
-                                response = s3_client.generate_presigned_url(
-                                    'get_object',
-                                    Params={
-                                        'Bucket': custombucket,
-                                        'Key': object_key,
-                                        'ResponseContentDisposition': 'inline',
-                                    },
-                                    ExpiresIn=3600  # Set the expiration time (in seconds) as needed
-                                )
-                            except ClientError as e:
-                                return str(e)
+                            # object_key = str(stud_id) + "_resume"
+                            # # Generate a presigned URL for the S3 object
+                            # s3_client = boto3.client('s3')
+                            # try:
+                            #     response = s3_client.generate_presigned_url(
+                            #         'get_object',
+                            #         Params={
+                            #             'Bucket': custombucket,
+                            #             'Key': object_key,
+                            #             'ResponseContentDisposition': 'inline',
+                            #         },
+                            #         ExpiresIn=3600  # Set the expiration time (in seconds) as needed
+                            #     )
+                            # except ClientError as e:
+                            #     return str(e)
                                 # if e.response['Error']['Code'] == 'NoSuchKey':
                                 #     # If the resume does not exist, return a page with a message
                                 #     return render_template('home.html')
                                 # else:
                                 #     return str(e)
-                            
+
+                            select_sql = f"SELECT * FROM job WHERE jobId = {applicationJob}"
+                            cursor = db_conn.cursor()
+                            cursor.execute(select_sql)
+                            jobInfo = cursor.fetchall()
+
+                            for jobI in jobInfo:
+                                jobType = jobI[2]
+                                jobPosition = jobI[3]
                             application_data = {
                                     "application_id" : applicationId,
                                     "application_datetime" : applicationDateTime,
@@ -485,7 +494,9 @@ def loginCompany():
                                     "stud_level": stud_level,
                                     "stud_programme": stud_programme,
                                     "stud_cohort": stud_cohort,
-                                    "stud_resume": response,
+                                    "jobType": jobType,
+                                    "jobPosition" : jobPosition,
+                                    # "stud_resume": response,
                                 }
 
                             # Append the student's dictionary to the student_list
