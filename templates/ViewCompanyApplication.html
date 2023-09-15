@@ -144,6 +144,12 @@
 			border-top: 0.5px solid rgb(182, 182, 182);
 			border-right: 0.5px solid rgb(182, 182, 182);
 		}
+
+		.filterStatus {
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-end;
+		}
 	</style>
 </head>
 
@@ -160,6 +166,17 @@
 			<h1>
 				Job Application
 			</h1>
+		</div>
+
+		<div class="filterStatus">
+			<label for="status">Filter by Status:</label>
+			<select name="status" id="status" style="margin-right: 10px;">
+				<option value="">All</option>
+				<option value="pending">Pending</option>
+				<option value="accepted">Accepted</option>
+				<option value="rejected">Rejected</option>
+			</select>
+			<input type="submit" value="Apply Filter">
 		</div>
 
 		<fieldset>
