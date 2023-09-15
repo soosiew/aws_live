@@ -39,11 +39,12 @@ form {
 }
 
 .h1 {
+    margin-left: 50px;
     border-bottom: 1px solid rgb(231, 231, 231);
 }
 
 .container {
-    border: 1px solid rgb(207, 207, 207);
+    /* border: 1px solid rgb(207, 207, 207); */
     border-radius: 5px;
     margin: 0px;
 }
@@ -120,4 +121,69 @@ tr {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+}
+
+.actionBtn {
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    background-color: rgb(0, 18, 46);
+    color: rgb(255, 255, 255);
+    margin-bottom: 5px;
+    width: 120px;
+    height: 25px;
+}
+
+.actionBtn:hover {
+    transition: 0.3s;
+    background-color: rgb(0, 99, 180);
+    color: rgb(255, 255, 255);
+}
+
+.approveBtn {
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    color: rgb(255, 255, 255);
+    margin-bottom: 5px;
+    width: 120px;
+    height: 25px;
+    margin-top: 10px;
+    background-color: rgb(0, 126, 0);
+}
+
+.approveBtn:hover {
+    transition: 0.3s;
+    background-color: rgb(0, 152, 0);
+    color: rgb(255, 255, 255);
+}
+
+.rejectBtn {
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+    width: 120px;
+    height: 25px;
+    margin-top: 10px;
+    background-color: rgb(143, 0, 0);
+}
+
+.rejectBtn:hover {
+    transition: 0.3s;
+    background-color: rgb(171, 0, 0);
+    color: rgb(255, 255, 255);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    background-color: #ccc;
+    color: #999;
+}
+
+button:disabled:hover {
+    cursor: not-allowed;
+    background-color: #ccc;
+    color: #999;
 }

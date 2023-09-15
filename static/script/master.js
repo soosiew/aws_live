@@ -43,3 +43,39 @@ imageUpload.addEventListener('change', function() {
     }
     
 });
+
+$(document).ready(function () {
+  // Function to sort the table
+  function sortTable(columnIndex, order) {
+    const tableBody = $('.jobDisplay-body');
+    const rows = tableBody.find('tr').toArray();
+
+    rows.sort((a, b) => {
+      const aValue = $(a).find('td').eq(columnIndex).text();
+      const bValue = $(b).find('td').eq(columnIndex).text();
+
+      if (order === 'asc') {
+        return aValue.localeCompare(bValue);
+      } else {
+        return bValue.localeCompare(aValue);
+      }
+    });
+
+    tableBody.empty().append(rows);
+  }
+
+  // Click event handler for sorting
+  $('.sortable').click(function () {
+    const columnIndex = $(this).index();
+    const sortOrder = $(this).hasClass('asc') ? 'desc' : 'asc';
+
+    // Remove sorting class from all columns
+    $('.sortable').removeClass('asc desc');
+
+    // Add sorting class to the clicked column
+    $(this).addClass(sortOrder);
+
+    // Sort the table
+    sortTable(columnIndex, sortOrder);
+  });
+});

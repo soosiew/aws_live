@@ -38,14 +38,14 @@
 		</label>
 	</div>
 
-	<form action="/addCompanyReg" autocomplete="on" method="POST" enctype="multipart/form-data">
-		<div class="h1">
-			<h1>
-				Job Application
-			</h1>
-		</div>
 
-		<div class="filterStatus">
+	<div class="h1">
+		<h1>
+			Job Management
+		</h1>
+	</div>
+
+	<!-- <div class="filterStatus">
 			<label for="status">Filter by Status:</label>
 			<select name="status" id="status" style="margin-right: 10px;">
 				<option value="">All</option>
@@ -54,63 +54,69 @@
 				<option value="rejected">Rejected</option>
 			</select>
 			<input type="submit" value="Apply Filter">
-		</div>
+		</div> -->
 
-		<fieldset>
-			<div class="container">
-				<form action="#" autocomplete="on" method="POST" enctype="multipart/form-data">
-					<table class="jobDisplay-table">
-						<thead>
-							<tr class="jobDisplay-head">
-								<td style="width: 50px;">num.</td>
-								<td>Job Published Date</td>
-								<td>Job</td>
-								<td colspan="6">Other Information</td>
-								<td>Action</td>
-							</tr>
-						</thead>
+	<fieldset>
+		<div class="container">
+			<form action="/compUpdateJobStatus" autocomplete="on" method="POST" enctype="multipart/form-data">
+				<table class="jobDisplay-table">
+					<thead>
+						<tr class="jobDisplay-head">
+							<td style="width: 50px;">num.</td>
+							<td class="sortable" data-column="publishDate">Job Published Date</td>
+							<td>Job</td>
+							<td colspan="6">Other Information</td>
+							<td>Action</td>
+						</tr>
+					</thead>
 
-						<tbody class="jobDisplay-body">
-							{% if jobData %}
-							{% for job in jobData %}
-							<tr>
-								<td style="width: 50px;">{{ loop.index }}</td>
-								<td>{{ job.publishDate }}</td>
-								<td>{{job.jobPosition}} <br />
-									{{job.jobType}}</td>
+					<tbody class="jobDisplay-body">
+						{% if jobData %}
+						{% for job in jobData %}
+						<tr>
+							<td style="width: 50px;">{{ loop.index }}</td>
+							<td>{{ job.publishDate }}</td>
+							<td>{{ job.jobPosition }} <br />
+								{{ job.jobType }}</td>
 
-								<td> <strong>Require level</strong> <br/> {{ job.qualificationLevel }}</td>
-								<td> <strong>Job Description</strong> <br/> {{ job.jobDesc}}</td>
-								<td> <strong>Job Requirement</strong> <br/> {{ job.jobRequirement }}</td>
-								<td> <strong>Location</strong> <br/> {{ job.jobLocation}}</td>
-								<td> <strong>Salary</strong> <br/> {{ job.salary }}</td>
-								<td> <strong>Num. of opening</strong> <br/> {{ job.numOfOpening}}</td>
+							<td> <strong>Require level</strong> <br /> {{ job.qualificationLevel }}</td>
+							<td> <strong>Job Description</strong> <br /> {{ job.jobDesc}}</td>
+							<td> <strong>Job Requirement</strong> <br /> {{ job.jobRequirement }}</td>
+							<td> <strong>Location</strong> <br /> {{ job.jobLocation}}</td>
+							<td> <strong>Salary</strong> <br /> {{ job.salary }}</td>
+							<td> <strong>Num. of opening</strong> <br /> {{ job.numOfOpening}}</td>
 
-								<td><button>Edit</button>
-									<br />
-									<button>Delete</button>
-								</td>
-							</tr>
-							{% endfor %}
-							<!-- <tr>
+							<td>
+								<!-- <button class="actionBtn" style="margin-top: 10px;" type="submit" name="" value="{{ job.jobId }}">Edit</button> -->
+								<!-- <br/> -->
+								<!-- <button class="rejectBtn" type="submit" name="close_application_button"
+									value="{{ job.jobId }}">Close Application</button> -->
+								<button class="rejectBtn" type="submit" name="close_application_button"
+									value="{{ job.jobId }}" {% if job.numOfOpening==0 %}disabled{% endif %}>
+									Close Application
+								</button>
+							</td>
+						</tr>
+						{% endfor %}
+						<!-- <tr>
 								<td colspan="8" style="text-align: center;">
 									<button type="submit" name="button-filter"
 										style="background-color: #54585d;">Pick</button>
 								</td>
 							</tr> -->
-							{% else %}
-							<tr>
-								<td colspan="8" style="text-align: center;">No student record</td>
-							</tr>
-							{% endif %}
-						</tbody>
-					</table>
-				</form>
-			</div>
+						{% else %}
+						<tr>
+							<td colspan="8" style="text-align: center;">No job published</td>
+						</tr>
+						{% endif %}
+					</tbody>
+				</table>
+			</form>
+		</div>
 
-		</fieldset>
-	</form>
+	</fieldset>
 
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="{{ url_for('static', filename='script/master.js') }}"></script>
 </body>
 

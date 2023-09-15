@@ -150,21 +150,29 @@ def companyViewApplication():
     except Exception as e:
         return str(e)
 
-@app.route('/companyViewManageJob')
-def companyViewManageJob():
+@app.route('/compUpdateJobStatus', methods=['POST'])
+def compUpdateJobStatus():
+    job_id = request.form['close_application_button']
+    update_sql = "UPDATE job SET numOfOpening = 0 WHERE jobId=%s"
+    cursor = db_conn.cursor()
+    
+    cursor.execute(update_sql, job_id)
+    db_conn.commit()
+    cursor.close()
+
+    currentCompany = str(session['logedInCompany'])
     data_company = passCompSession().get_json()
     comp_name = data_company.get('comp_name', '')
-    currentCompany = str(session['logedInCompany'])
 
-    select_sql = f"SELECT * FROM job WHERE jobId = '%{currentCompany}%'"
+    select_sql = f"SELECT * FROM job WHERE company = '{currentCompany}'"
     cursor = db_conn.cursor()
-
+    
     try:
         cursor.execute(select_sql)
-        jobInfo = cursor.fetchall()  # Fetch all students
+        jobInfo = cursor.fetchall() 
         job_list = []
         for jobData in jobInfo:
-
+            
             job_data = {
                 "jobId" : jobData[0],
                 "publishDate" : jobData[1].strftime("%d-%m-%Y %H:%M:%S"),
@@ -172,9 +180,49 @@ def companyViewManageJob():
                 "jobPosition" : jobData[3],
                 "qualificationLevel" : jobData[4],
                 "jobDesc" : jobData[5],
-                "job" : jobData[6],
+                "jobRequirement" : jobData[6],
                 "jobLocation" : jobData[7],
-                "salary" : jobData[8],
+                "salary" : f"RM {jobData[8]:.2f}",
+                "numOfOpening" : jobData[9],
+                "industry" : jobData[11],
+                }           
+            job_list.append(job_data)  
+        # if action == 'drop':
+        #  return render_template('DropStudent.html', application_list=company_application_list,id=id)
+
+        # if action =='pickUp': 
+        #  return render_template('PickUpStudent.html', application_list=company_application_list)
+        # print(job_list)
+        # return render_template('home.html')
+        return render_template('CompanyViewManageJob.html', name=comp_name, jobData = job_list)
+    except Exception as e:
+        return str(e)
+
+@app.route('/companyViewManageJob')
+def companyViewManageJob():
+    data_company = passCompSession().get_json()
+    comp_name = data_company.get('comp_name', '')
+    currentCompany = str(session['logedInCompany'])
+    
+    select_sql = f"SELECT * FROM job WHERE company = '{currentCompany}'"
+    cursor = db_conn.cursor()
+    
+    try:
+        cursor.execute(select_sql)
+        jobInfo = cursor.fetchall() 
+        job_list = []
+        for jobData in jobInfo:
+            
+            job_data = {
+                "jobId" : jobData[0],
+                "publishDate" : jobData[1].strftime("%d-%m-%Y %H:%M:%S"),
+                "jobType" : jobData[2],
+                "jobPosition" : jobData[3],
+                "qualificationLevel" : jobData[4],
+                "jobDesc" : jobData[5],
+                "jobRequirement" : jobData[6],
+                "jobLocation" : jobData[7],
+                "salary" : f"RM {jobData[8]:.2f}",
                 "numOfOpening" : jobData[9],
                 "industry" : jobData[11],
                 }           
