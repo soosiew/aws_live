@@ -59,10 +59,100 @@ def companyViewApplication():
     data_company = passCompSession().get_json()
     comp_name = data_company.get('comp_name', '')
     currentCompany=str(session['logedInCompany'])
+    
+    print("hihi" + currentCompany)
 
+    select_sql = f"SELECT * FROM companyApplication ca JOIN job j ON ca.job = j.jobId WHERE j.company LIKE '%{currentCompany}%'"
+    cursor = db_conn.cursor()
+
+    try:
+        cursor.execute(select_sql)
+        jobApplication = cursor.fetchall()  # Fetch all students
+        company_application_list = []
+        for application in jobApplication:
+            applicationId = application[0]
+            applicationDateTime = application[1]
+            applicationStatus = application[2]
+            applicationJob = application[4]
+
+            select_sql = f"SELECT s.studentId, s.studentName, s.mobileNumber, s.gender, s.address, s.email, s.level, s.programme, s.cohort FROM student s JOIN companyApplication ca ON s.studentId LIKE ca.student WHERE ca.applicationId LIKE '%{applicationId}%'"
+            cursor = db_conn.cursor()
+            cursor.execute(select_sql)
+            studentInfo = cursor.fetchall()
+            
+            for student in studentInfo:
+                stud_id = student[0]
+                stud_name = student[1]
+                stud_phone = student[2]
+                stud_gender = student[3]
+                stud_address = student[4]
+                stud_email = student[5]
+                stud_level = student[6]
+                stud_programme = student[7]
+                stud_cohort = student[8]
+                # Construct the S3 object key
+                # object_key = str(stud_id) + "_resume"
+                # # Generate a presigned URL for the S3 object
+                # s3_client = boto3.client('s3')
+                # try:
+                #     response = s3_client.generate_presigned_url(
+                #         'get_object',
+                #         Params={
+                #             'Bucket': custombucket,
+                #             'Key': object_key,
+                #             'ResponseContentDisposition': 'inline',
+                #         },
+                #         ExpiresIn=3600  # Set the expiration time (in seconds) as needed
+                #     )
+                # except ClientError as e:
+                #     return str(e)
+                    # if e.response['Error']['Code'] == 'NoSuchKey':
+                    #     # If the resume does not exist, return a page with a message
+                    #     return render_template('home.html')
+                    # else:
+                    #     return str(e)
+
+                select_sql = f"SELECT * FROM job WHERE jobId = {applicationJob}"
+                cursor = db_conn.cursor()
+                cursor.execute(select_sql)
+                jobInfo = cursor.fetchall()
+
+                for jobI in jobInfo:
+                    jobType = jobI[2]
+                    jobPosition = jobI[3]
+                application_data = {
+                        "application_id" : applicationId,
+                        "application_datetime" : applicationDateTime.strftime("%d-%m-%Y %H:%M:%S"),
+                        "application_status" : applicationStatus,
+                        "stud_id": stud_id,
+                        "stud_name": stud_name,
+                        "stud_phone": stud_phone,
+                        "stud_gender": stud_gender,
+                        "stud_address": stud_address,
+                        "stud_email": stud_email,
+                        "stud_level": stud_level,
+                        "stud_programme": stud_programme,
+                        "stud_cohort": stud_cohort,
+                        "jobType": jobType,
+                        "jobPosition" : jobPosition,
+                        # "stud_resume": response,
+                    }
+
+                # Append the student's dictionary to the student_list
+                # print(application_data)
+                company_application_list.append(application_data)  
+        # if action == 'drop':
+        #  return render_template('DropStudent.html', application_list=company_application_list,id=id)
+
+        # if action =='pickUp': 
+        #  return render_template('PickUpStudent.html', application_list=company_application_list)
+        print(company_application_list)
+        # return render_template('home.html')
+        return render_template('ViewCompanyApplication.html', name=comp_name, applicationData = company_application_list)
+    except Exception as e:
+        return str(e)
     
-    
-    return render_template('ViewCompanyApplication.html', name=comp_name)
+    # return render_template('ViewCompanyApplication.html', name=comp_name)
 
 @app.route('/companyViewManageJob')
 def companyViewManageJob():
