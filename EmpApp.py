@@ -171,17 +171,7 @@ def compViewResume():
         else:
             return str(e)
         
-    script = f'''
-        <script type="text/javascript">
-            var newTab = window.open("{response}", "_blank");
-            if (newTab) {{
-                newTab.focus();
-            }}
-        </script>
-    '''
-    
-    # Redirect the user to the URL of the PDF file
-    return json.dumps({'script': script})
+    return redirect(response, url=response)
 
 
 
