@@ -251,8 +251,8 @@ def compApproveJobApp():
     cursor.execute(update_sql, application_id)
     db_conn.commit()
     cursor.close()
-    return render_template('home.html')
-    # return redirect(url_for('\companyViewApplication'))
+    # return render_template('home.html')
+    return redirect(url_for('companyViewApplication'))
 
 @app.route('/compRejectJobApp', methods=['POST'])
 def compRejectJobApp():
@@ -264,14 +264,8 @@ def compRejectJobApp():
     cursor.execute(update_sql, application_id)
     db_conn.commit()
     cursor.close()
-    return render_template('home.html')
-    # return redirect(url_for('\companyViewApplication'))
-
-
-
-
-
-
+    # return render_template('home.html')
+    return redirect(url_for('companyViewApplication'))
 
 @app.route('/login_company')
 def login_company():
