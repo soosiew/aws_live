@@ -124,6 +124,8 @@ def companyViewApplication():
                 for jobI in jobInfo:
                     jobType = jobI[2]
                     jobPosition = jobI[3]
+                    numOfOpening = jobI[9]
+
                 application_data = {
                         "application_id" : applicationId,
                         "application_datetime" : applicationDateTime.strftime("%d-%m-%Y %H:%M:%S"),
@@ -139,6 +141,7 @@ def companyViewApplication():
                         "stud_cohort": stud_cohort,
                         "jobType": jobType,
                         "jobPosition" : jobPosition,
+                        "numOfOpening" : numOfOpening,
                         # "stud_resume": response,
                     }
                 company_application_list.append(application_data)  
@@ -253,7 +256,7 @@ def compApproveJobApp():
     jobInfo = cursor.fetchall()
     for jobData in jobInfo:
         jobId = jobData[0]
-        
+
     update_sql = f"UPDATE job SET numOfOpening = numOfOpening - 1 WHERE jobId= '{jobId}'"
     cursor = db_conn.cursor()
     cursor.execute(update_sql)
@@ -328,45 +331,8 @@ def updateCompanyPassword():
     finally:
         cursor.close()
         print("Company password updated successfully...")
-
         # Reload page with updated company profile
-        currentCompany = str(session['logedInCompany'])
-        select_sql = "SELECT * FROM company WHERE companyId = %s"
-        cursor = db_conn.cursor()
-
-        try:
-            cursor.execute(select_sql, (currentCompany,))
-            company = cursor.fetchone()
-
-            if not company:
-                print("company not found")
-
-            comp_name = company[2]
-            comp_about = company[3]
-            comp_address = company[4]
-            comp_email = company[5]
-            comp_phone = company[6]
-
-            # Fetch the S3 image URL based on comp_id
-            comp_image_file_name_in_s3 = "comp-id-" + str(currentCompany) + "_image_file"
-            s3 = boto3.client('s3')
-            bucket_name = custombucket
-
-            try:
-                response = s3.generate_presigned_url('get_object',
-                                                    Params={'Bucket': bucket_name,
-                                                            'Key': comp_image_file_name_in_s3},
-                                                    ExpiresIn=7400)  # Adjust the expiration time as needed            
-                return render_template('EditCompanyProfile.html', name=comp_name, compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
-                
-            except Exception as e:
-                print(str(e))
-
-        except Exception as e:
-            print(str(e))
-
-        finally:
-            cursor.close()
+        return redirect(url_for('manage_company_profile'))
 
 @app.route("/updateCompanyProfile", methods=['POST'])
 def updateCompanyProfile():

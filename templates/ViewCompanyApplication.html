@@ -91,14 +91,14 @@
 								enctype="multipart/form-data">
 								<button class="approveBtn" type="submit" name="approve_btn"
 									value="{{ application.application_id }}" {% if application.application_status
-									!="pending" %}disabled{% endif %}>Approve</button>
+									!="pending" or application.numOfOpening == 0%}disabled{% endif %}>Approve</button>
 							</form>
 							<br />
 							<form action="/compRejectJobApp" autocomplete="on" method="POST"
 								enctype="multipart/form-data">
 								<button class="rejectBtn" type="submit" name="reject_btn"
 									value="{{ application.application_id }}" {% if application.application_status
-									!="pending" %}disabled{% endif %}>Reject</button>
+									!="pending" or application.numOfOpening == 0 %}disabled{% endif %}>Reject</button>
 							</form>
 						</td>
 					</tr>
