@@ -103,10 +103,10 @@ tr {
 
 .jobDisplay-head td {
     font-weight: bold;
-    background-color: rgb(57, 57, 101);
-    color: white;
+    background-color: rgb(35, 35, 35);
+    color: rgb(227, 227, 227);
     border: none;
-    border-bottom: 1.0px solid rgb(0, 0, 0);
+    border-bottom: 1.0px solid rgb(53, 53, 53);
     border-right: 0.5px solid rgb(182, 182, 182);
 }
 
@@ -118,10 +118,36 @@ tr {
 }
 
 .filterStatus {
+    margin-left: 50px;
     margin-right: 50px;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-around;
+    border: none;
+    border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+.filterStatus input{
+    width: 200px;
+    padding-top: 5px;
+    padding-right: 5px;
+    font-size: 18px;
+    cursor: pointer;    
+    color: #999;
+    border: none;
+    background-color: transparent;
+}
+
+.filterStatus input:hover{
+    transition: 0.3s;
+    border: none;
+    color: rgb(78, 70, 149);
+}
+
+/* Style for active button */
+.filterStatus input.active {
+    color: rgb(21, 16, 76);
+    border-bottom: 2px solid rgb(21, 16, 76);
 }
 
 .actionBtn {
