@@ -1,10 +1,7 @@
-from flask import Flask, render_template, request, session, Response, jsonify, redirect, url_for, render_template_string
+from flask import Flask, render_template, request, session, Response, jsonify, redirect, url_for
 from pymysql import connections
-import os
-import json
 import boto3
 import datetime
-import base64
 from config import *
 from botocore.exceptions import ClientError
 
@@ -587,7 +584,7 @@ def loginCompany():
             return render_template('LoginCompany.html', msg="Access Denied : Invalid email or password")
     except Exception as e:
         return str(e)
-    finally:   
+    finally:
         cursor.close()
         
     # return render_template('LoginCompany.html', msg="")
