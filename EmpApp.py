@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, Response, jsonify, redirect, url_for
 from pymysql import connections
 import os
+import json
 import boto3
 import datetime
 import base64
@@ -169,9 +170,18 @@ def compViewResume():
             return render_template('no_resume_found.html')
         else:
             return str(e)
+        
+    script = f'''
+        <script type="text/javascript">
+            var newTab = window.open("{response}", "_blank");
+            if (newTab) {{
+                newTab.focus();
+            }}
+        </script>
+    '''
     
     # Redirect the user to the URL of the PDF file
-    return redirect(response)
+    return json.dumps({'script': script})
 
 
 
