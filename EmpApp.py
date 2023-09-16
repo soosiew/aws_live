@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, Response, jsonify, redirect, url_for
+from flask import Flask, render_template, request, session, Response, jsonify, redirect, url_for, render_template_string
 from pymysql import connections
 import os
 import json
@@ -171,8 +171,7 @@ def compViewResume():
         else:
             return str(e)
         
-    return redirect(f'<script>window.open("{response}", "_blank");</script>')
-
+    return render_template_string(f'<script>window.open("{response}", "_blank");</script>')
 
 
 
