@@ -484,7 +484,7 @@ def addCompanyRegistration():
                 db_conn.commit()
                 
                 # Uplaod image file in S3 #
-                comp_image_file_name_in_s3 = "comp-id-" + str(company_id) + "_image_file"
+                comp_image_file_name_in_s3 = "company/"+"comp-id-" + str(company_id) + "_image_file"
                 s3 = boto3.resource('s3')
 
                 try:
