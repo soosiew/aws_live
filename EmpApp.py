@@ -30,7 +30,6 @@ def index():
     return render_template('home.html', number=1)
 
 # company side
-
 @app.route('/logoutCompany')
 def logoutCompany():  
     if 'id' in session:  
@@ -384,7 +383,7 @@ def updateCompanyProfile():
         
         if company_image_file.filename != "" : 
             # Update image file in S3
-            comp_image_file_name_in_s3 = "comp-id-" + str(currentCompany) + "_image_file"
+            comp_image_file_name_in_s3 = "company/"+"comp-id-" + str(currentCompany) + "_image_file"
             s3 = boto3.resource('s3')
 
             try:
@@ -431,7 +430,7 @@ def manage_company_profile():
         comp_phone = company[6] 
 
         # Fetch the S3 image URL based on comp_id
-        comp_image_file_name_in_s3 = "comp-id-" + str(currentCompany) + "_image_file"
+        comp_image_file_name_in_s3 = "company/"+"comp-id-" + str(currentCompany) + "_image_file"
         s3 = boto3.client('s3')
         bucket_name = custombucket
 
