@@ -56,53 +56,62 @@
 
 		<fieldset>
 			<div class="container">
-				<form action="/companyViewApplication" autocomplete="on" method="POST" enctype="multipart/form-data">
-					<table class="jobDisplay-table">
-						<thead>
-							<tr class="jobDisplay-head">
-								<td style="width: 50px;">num.</td>
-								<td>Job Application Date</td>
-								<td>Applied Job</td>
-								<td colspan="4">Student</td>
-								<td>Resume</td>
-								<td>Status</td>
-								<td>Action</td>
-							</tr>
-						</thead>
-						
-						<tbody class="jobDisplay-body">
-							{% if applicationData %}
-							{% for application in applicationData %}
-							<tr>
-								<td style="width: 50px;">{{ loop.index }}</td>
-								<td>
-									{{ application.application_datetime }}
-								</td>
-								<td>
-									{{application.jobPosition}} <br />
-									{{application.jobType}}
-								</td>
-								<td>{{ application.stud_id }}</td>
-								<td>{{ application.stud_name}} <br /> {{
-									application.stud_gender}} </td>
-								<td>{{ application.stud_phone }}</td>
-								<td>{{ application.stud_cohort}}</td>
-								<td><a href="#" value="view resume">View Resume</a></td>
-								<td>{{ application.application_status}}</td>
-								<td><button class="approveBtn" >Approve</button>
-									<br />
-									<button class="rejectBtn">Reject</button>
-								</td>
-							</tr>
-							{% endfor %}
-							{% else %}
-							<tr>
-								<td colspan="8" style="text-align: center;">No job application found</td>
-							</tr>
-							{% endif %}
-						</tbody>
-					</table>
-				</form>
+				<table class="jobDisplay-table">
+					<thead>
+						<tr class="jobDisplay-head">
+							<td style="width: 50px;">num.</td>
+							<td>Job Application Date</td>
+							<td>Applied Job</td>
+							<td colspan="4">Student</td>
+							<td>Resume</td>
+							<td>Status</td>
+							<td>Action</td>
+						</tr>
+					</thead>
+
+					<tbody class="jobDisplay-body">
+						{% if applicationData %}
+						{% for application in applicationData %}
+						<tr>
+							<td style="width: 50px;">{{ loop.index }}</td>
+							<td>
+								{{ application.application_datetime }}
+							</td>
+							<td>
+								{{application.jobPosition}} <br />
+								{{application.jobType}}
+							</td>
+							<td>{{ application.stud_id }}</td>
+							<td>{{ application.stud_name}} <br /> {{
+								application.stud_gender}} </td>
+							<td>{{ application.stud_phone }}</td>
+							<td>{{ application.stud_cohort}}</td>
+							<td><a href="#" value="view resume">View Resume</a></td>
+							<td>{{ application.application_status}}</td>
+							<td>
+								<form action="/compApproveJobApp" autocomplete="on" method="POST"
+									enctype="multipart/form-data">
+									<button class="approveBtn" type="submit" name="approve_btn" value="{{ application.application_id }}"
+										{% if application.application_status !="pending" %}disabled{% endif
+										%}>Approve</button>
+								</form>
+								<br />
+								<form action="/compRejectJobApp" autocomplete="on" method="POST"
+									enctype="multipart/form-data">
+									<button class="rejectBtn" type="submit" name="reject_btn" value="{{ application.application_id }}" {%
+										if application.application_status !="pending" %}disabled{% endif
+										%}>Reject</button>
+								</form>
+							</td>
+						</tr>
+						{% endfor %}
+						{% else %}
+						<tr>
+							<td colspan="8" style="text-align: center;">No job application found</td>
+						</tr>
+						{% endif %}
+					</tbody>
+				</table>
 			</div>
 
 		</fieldset>

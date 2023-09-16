@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, Response, jsonify, redirect
+from flask import Flask, render_template, request, session, Response, jsonify, redirect, url_for
 from pymysql import connections
 import os
 import boto3
@@ -144,7 +144,6 @@ def companyViewApplication():
 
         # if action =='pickUp': 
         #  return render_template('PickUpStudent.html', application_list=company_application_list)
-        print(company_application_list)
         # return render_template('home.html')
         return render_template('ViewCompanyApplication.html', name=comp_name, applicationData = company_application_list)
     except Exception as e:
@@ -240,6 +239,39 @@ def companyViewManageJob():
 
 
     return render_template('CompanyViewManageJob.html', name=comp_name)
+
+@app.route('/compApproveJobApp', methods=['POST'])
+def compApproveJobApp():
+    application_id = request.form['approve_btn']
+    print(application_id)
+    update_sql = "UPDATE companyApplication SET status = 'approved' WHERE applicationId=%s"
+    cursor = db_conn.cursor()
+    print(update_sql)
+
+    cursor.execute(update_sql, application_id)
+    db_conn.commit()
+    cursor.close()
+    return render_template('home.html')
+    # return redirect(url_for('\companyViewApplication'))
+
+@app.route('/compRejectJobApp', methods=['POST'])
+def compRejectJobApp():
+    application_id = request.form['reject_btn']
+    print(application_id)
+    update_sql = "UPDATE companyApplication SET status = 'rejected' WHERE applicationId=%s"
+    cursor = db_conn.cursor()
+    
+    cursor.execute(update_sql, application_id)
+    db_conn.commit()
+    cursor.close()
+    return render_template('home.html')
+    # return redirect(url_for('\companyViewApplication'))
+
+
+
+
+
+
 
 @app.route('/login_company')
 def login_company():
