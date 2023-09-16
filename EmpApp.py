@@ -331,7 +331,6 @@ def updateCompanyPassword():
     finally:
         cursor.close()
         print("Company password updated successfully...")
-        # Reload page with updated company profile
         return redirect(url_for('manage_company_profile'))
 
 @app.route("/updateCompanyProfile", methods=['POST'])
