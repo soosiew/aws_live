@@ -171,7 +171,7 @@ def compViewResume():
         else:
             return str(e)
         
-    return redirect(response, url=response)
+    return redirect(url=response)
 
 
 
