@@ -246,6 +246,20 @@ def compApproveJobApp():
     cursor.execute(update_sql, application_id)
     db_conn.commit()
     cursor.close()
+
+    select_sql = f"SELECT job FROM companyApplication WHERE applicationId = '{application_id}'"
+    cursor = db_conn.cursor()
+    cursor.execute(select_sql)
+    jobInfo = cursor.fetchall()
+    for jobData in jobInfo:
+        jobId = jobData[0]
+        
+    update_sql = f"UPDATE job SET numOfOpening = numOfOpening - 1 WHERE jobId= '{jobId}'"
+    cursor = db_conn.cursor()
+    cursor.execute(update_sql)
+    db_conn.commit()
+    cursor.close()
+
     return redirect(url_for('companyViewApplication', filter='All'))
 
 @app.route('/compRejectJobApp', methods=['POST'])
@@ -600,7 +614,7 @@ def addJob():
         print("Job published...")
         data_company = passCompSession().get_json()
         comp_name = data_company.get('comp_name', '')
-        return render_template('ViewCompanyApplication.html', name=comp_name)
+        return redirect(url_for('companyViewManageJob'))
     
 @app.route("/loginCompany", methods=['GET','POST'])
 def loginCompany():
