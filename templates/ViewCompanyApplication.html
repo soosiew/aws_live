@@ -84,7 +84,14 @@
 							application.stud_gender}} </td>
 						<td>{{ application.stud_phone }}</td>
 						<td>{{ application.stud_cohort}}</td>
-						<td><a href="#" value="view resume">View Resume</a></td>
+						<td>
+							<form action="/compViewResume" autocomplete="on" method="POST"
+								enctype="multipart/form-data"> 
+								<button class="viewResumeBtn" type="submit" name="view_resume_btn"
+								value="{{ application.stud_id }}">View Resume</button>
+							</form>
+						</td>
+						
 						<td>{{ application.application_status}}</td>
 						<td>
 							<form action="/compApproveJobApp" autocomplete="on" method="POST"

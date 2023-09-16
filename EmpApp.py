@@ -28,6 +28,8 @@ table = 'employee'
 def index():
     return render_template('home.html', number=1)
 
+# company side
+
 @app.route('/logoutCompany')
 def logoutCompany():  
     if 'id' in session:  
@@ -35,14 +37,6 @@ def logoutCompany():
         return render_template('home.html')  
     else:  
         return render_template('home.html') 
-
-@app.route('/logoutAdmin')
-def logoutAdmin():  
-    if 'id' in session:  
-        session.pop('logedInAdmin',None)  
-        return render_template('home.html')
-    else:  
-        return render_template('home.html')
 
 @app.route('/register_company')
 def register_company():
@@ -148,6 +142,42 @@ def companyViewApplication():
         return render_template('ViewCompanyApplication.html', name=comp_name, applicationData = company_application_list, active_filter=active_filter)
     except Exception as e:
         return str(e)
+    
+@app.route('/compViewResume', methods=['POST'])
+def compViewResume():
+    studentId = request.form['view_resume_btn']
+
+    # Construct the S3 object key
+    object_key = f"resume/{studentId}_resume"
+
+    # Generate a presigned URL for the S3 object
+    s3_client = boto3.client('s3')
+
+    try:
+        response = s3_client.generate_presigned_url(
+            'get_object',
+            Params={
+                'Bucket': custombucket,
+                'Key': object_key,
+                'ResponseContentDisposition': 'inline',
+            },
+            ExpiresIn=3600  # Set the expiration time (in seconds) as needed
+        )
+    except ClientError as e:
+        if e.response['Error']['Code'] == 'NoSuchKey':
+            # If the resume does not exist, return a page with a message
+            return render_template('no_resume_found.html')
+        else:
+            return str(e)
+    
+    # Redirect the user to the URL of the PDF file
+    return redirect(response)
+
+
+
+
+
+
 
 @app.route('/compUpdateJobStatus', methods=['POST'])
 def compUpdateJobStatus():
@@ -464,10 +494,6 @@ def manage_company_profile():
     finally:
         cursor.close()
         
-@app.route('/login_admin')
-def login_admin():
-    return render_template('LoginAdmin.html')
-
 @app.route("/addCompanyReg", methods=['POST'])
 def addCompanyRegistration():
     try:
@@ -610,6 +636,21 @@ def loginCompany():
         
     # return render_template('LoginCompany.html', msg="")
 
+
+
+# Admin side
+@app.route('/login_admin')
+def login_admin():
+    return render_template('LoginAdmin.html')
+
+@app.route('/logoutAdmin')
+def logoutAdmin():  
+    if 'id' in session:  
+        session.pop('logedInAdmin',None)  
+        return render_template('home.html')
+    else:  
+        return render_template('home.html')
+
 @app.route("/loginAdmin", methods=['GET','POST'])
 def loginAdmin():
     if request.method == 'POST':
@@ -620,36 +661,6 @@ def loginAdmin():
             return render_template('LoginAdmin.html')
         session['logedInAdmin'] = str(admin_id)
         return render_template('AdminDashboard.html', id=session['logedInAdmin'])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
