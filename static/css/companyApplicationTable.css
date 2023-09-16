@@ -105,8 +105,8 @@ tr {
 
 .viewResumeBtn:hover{
     transition: 0.3s;
-    color: rgb(94, 88, 255);
-    border-bottom: 0.5px solid rgb(94, 88, 255);
+    color: rgb(165, 161, 255);
+    border-bottom: 0.5px solid rgb(165, 161, 255);
 }
 
 .jobDisplay-table {
