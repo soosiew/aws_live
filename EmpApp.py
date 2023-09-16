@@ -173,7 +173,6 @@ def compViewResume():
         
     return redirect(response)
 
-
 @app.route('/compUpdateJobStatus', methods=['POST'])
 def compUpdateJobStatus():
     job_id = request.form['close_application_button']
@@ -356,7 +355,7 @@ def updateCompanyPassword():
     finally:
         cursor.close()
         print("Company password updated successfully...")
-        return redirect(url_for('manage_company_profile'))
+        return redirect(url_for('manage_company_profile', msg="Password updated successfully"))
 
 @app.route("/updateCompanyProfile", methods=['POST'])
 def updateCompanyProfile():
@@ -454,6 +453,8 @@ def updateCompanyProfile():
 def manage_company_profile():
     currentCompany = str(session['logedInCompany'])
     select_sql = "SELECT * FROM company WHERE companyId = %s"
+
+    chgPwdMsg = request.args.get('msg', default='')
     cursor = db_conn.cursor()
     try:
         cursor.execute(select_sql, (currentCompany,))
@@ -478,7 +479,7 @@ def manage_company_profile():
                                                  Params={'Bucket': bucket_name,
                                                          'Key': comp_image_file_name_in_s3},
                                                  ExpiresIn=7400)  # Adjust the expiration time as needed            
-            return render_template('EditCompanyProfile.html', name=comp_name, compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone)
+            return render_template('EditCompanyProfile.html', name=comp_name, compName=comp_name, compLogo=response, compAbout=comp_about, compAddress=comp_address, compEmail=comp_email, compPhone=comp_phone, msg=chgPwdMsg)
             
         except Exception as e:
             print(str(e))
