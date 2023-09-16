@@ -171,7 +171,7 @@ def compViewResume():
         else:
             return str(e)
         
-    return render_template_string(f'<script>window.open("{response}", "_blank");</script>')
+    return redirect(response)
 
 
 
