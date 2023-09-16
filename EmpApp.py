@@ -430,7 +430,7 @@ def manage_company_profile():
         comp_image_file_name_in_s3 = "company/"+"comp-id-" + str(currentCompany) + "_image_file"
         s3 = boto3.client('s3')
         bucket_name = custombucket
-
+        
         try:
             response = s3.generate_presigned_url('get_object',
                                                  Params={'Bucket': bucket_name,

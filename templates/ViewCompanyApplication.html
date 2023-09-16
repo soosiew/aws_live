@@ -45,10 +45,13 @@
 
 	<div class="filterStatus">
 		<form action="/filterJobApp" autocomplete="on" method="POST" enctype="multipart/form-data">
-			<input type="submit" value="All" name="filter" {% if active_filter == 'All' %}class="active"{% endif %}>
-			<input type="submit" value="Pending" name="filter" {% if active_filter == 'Pending' %}class="active"{% endif %}>
-			<input type="submit" value="Approved" name="filter" {% if active_filter == 'Approved' %}class="active"{% endif %}>
-			<input type="submit" value="Rejected" name="filter" {% if active_filter == 'Rejected' %}class="active"{% endif %}>
+			<input type="submit" value="All" name="filter" {% if active_filter=='All' %}class="active" {% endif %}>
+			<input type="submit" value="Pending" name="filter" {% if active_filter=='Pending' %}class="active" {% endif
+				%}>
+			<input type="submit" value="Approved" name="filter" {% if active_filter=='Approved' %}class="active" {%
+				endif %}>
+			<input type="submit" value="Rejected" name="filter" {% if active_filter=='Rejected' %}class="active" {%
+				endif %}>
 		</form>
 	</div>
 
@@ -80,32 +83,38 @@
 							{{application.jobType}}
 						</td>
 						<td>{{ application.stud_id }}</td>
-						<td>{{ application.stud_name}} <br /> {{
-							application.stud_gender}} </td>
+						<td>{{ application.stud_name}} <br />
+							{{application.stud_gender}}
+							{% if application.stud_gender == 'F' %}
+							<span class="iconify" data-icon="ic:baseline-girl"></span>
+							{% else %}
+							<span class="iconify" data-icon="ic:outline-boy"></span>
+							{% endif %}
+						</td>
 						<td>{{ application.stud_phone }}</td>
 						<td>{{ application.stud_cohort}}</td>
 						<td>
 							<form action="/compViewResume" autocomplete="on" method="POST"
-								enctype="multipart/form-data"> 
+								enctype="multipart/form-data">
 								<button class="viewResumeBtn" type="submit" name="view_resume_btn"
-								value="{{ application.stud_id }}">View Resume</button>
+									value="{{ application.stud_id }}">View Resume</button>
 							</form>
 						</td>
-						
+
 						<td>{{ application.application_status}}</td>
 						<td>
 							<form action="/compApproveJobApp" autocomplete="on" method="POST"
 								enctype="multipart/form-data">
 								<button class="approveBtn" type="submit" name="approve_btn"
 									value="{{ application.application_id }}" {% if application.application_status
-									!="pending" or application.numOfOpening == 0%}disabled{% endif %}>Approve</button>
+									!="pending" or application.numOfOpening==0%}disabled{% endif %}>Approve</button>
 							</form>
 							<br />
 							<form action="/compRejectJobApp" autocomplete="on" method="POST"
 								enctype="multipart/form-data">
 								<button class="rejectBtn" type="submit" name="reject_btn"
 									value="{{ application.application_id }}" {% if application.application_status
-									!="pending" or application.numOfOpening == 0 %}disabled{% endif %}>Reject</button>
+									!="pending" or application.numOfOpening==0 %}disabled{% endif %}>Reject</button>
 							</form>
 						</td>
 					</tr>
@@ -120,7 +129,8 @@
 		</div>
 
 	</fieldset>
-	
+
+	<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
 	<script src="{{ url_for('static', filename='script/master.js') }}"></script>
 </body>
 
