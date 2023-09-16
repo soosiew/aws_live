@@ -148,7 +148,7 @@ def compViewResume():
     studentId = request.form['view_resume_btn']
 
     # Construct the S3 object key
-    object_key = f"{studentId}_resume"
+    object_key = f"resume/{studentId}_resume"
 
     # Generate a presigned URL for the S3 object
     s3_client = boto3.client('s3')
