@@ -171,7 +171,7 @@ def compViewResume():
         else:
             return str(e)
         
-    return f'<script>window.open("{response}", "_blank");</script>'
+    return redirect(f'<script>window.open("{response}", "_blank");</script>')
 
 
 
