@@ -169,7 +169,8 @@ def compViewResume():
             # If the resume does not exist, return a page with a message
             return render_template('no_resume_found.html')
         else:
-            return str(e)
+            # return str(e)
+            return render_template('no_resume_found.html')
         
     return redirect(response)
 
