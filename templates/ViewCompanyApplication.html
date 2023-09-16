@@ -86,14 +86,14 @@
 						<td>{{ application.stud_name}} <br />
 							<!-- {{application.stud_gender}} -->
 							{% if application.stud_gender == 'F' %}
-							<span class="iconify" data-icon="ic:baseline-girl" style="width: 40px;
-							height: 20px; color: rgb(188, 31, 165); padding-top: 20px;">F</span>
+							<span class="iconify" data-icon="ic:baseline-girl" style="width: 80px;
+							height: 30px; color: rgb(188, 31, 165);">F</span>
 							{% else %}
-							<span class="iconify" data-icon="ic:outline-boy" style="width: 40px;
-							height: 20px; color: rgb(83, 114, 238); padding-top: 20px;">M</span>
+							<span class="iconify" data-icon="ic:outline-boy" style="width: 80px;
+							height: 30px; color: rgb(83, 114, 238);">M</span>
 							{% endif %}
 						</td>
-						<td>{{ application.stud_phone }}</td>
+						<td><iconify-icon icon="ph:phone-light"></iconify-icon> {{ application.stud_phone }}</td>
 						<td>{{ application.stud_cohort}}</td>
 						<td>
 							<form action="/compViewResume" autocomplete="on" method="POST"
@@ -133,6 +133,7 @@
 	</fieldset>
 
 	<script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+	<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 	<script src="{{ url_for('static', filename='script/master.js') }}"></script>
 </body>
 

@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, Response, jsonify, redirect, url_for
 from pymysql import connections
 import boto3
+import json
 import datetime
 from config import *
 from botocore.exceptions import ClientError
@@ -222,8 +223,16 @@ def companyViewManageJob():
     data_company = passCompSession().get_json()
     comp_name = data_company.get('comp_name', '')
     currentCompany = str(session['logedInCompany'])
+
+    active_filter = request.args.get('filter', default='All')
     
-    select_sql = f"SELECT * FROM job WHERE company = '{currentCompany}'"
+    if active_filter == 'All':
+        select_sql = f"SELECT * FROM job WHERE company = '{currentCompany}'"
+    elif active_filter == 'Opening':
+        select_sql = f"SELECT * FROM job WHERE company = '{currentCompany}' AND numOfOpening != 0"  
+    else:
+        select_sql = f"SELECT * FROM job WHERE company = '{currentCompany}' AND numOfOpening = 0"
+    
     cursor = db_conn.cursor()
     
     try:
@@ -246,19 +255,9 @@ def companyViewManageJob():
                 "industry" : jobData[11],
                 }           
             job_list.append(job_data)  
-        # if action == 'drop':
-        #  return render_template('DropStudent.html', application_list=company_application_list,id=id)
-
-        # if action =='pickUp': 
-        #  return render_template('PickUpStudent.html', application_list=company_application_list)
-        # print(job_list)
-        # return render_template('home.html')
-        return render_template('CompanyViewManageJob.html', name=comp_name, jobData = job_list)
+        return render_template('CompanyViewManageJob.html', name=comp_name, jobData = job_list, active_filter=active_filter)
     except Exception as e:
         return str(e)
-
-
-    return render_template('CompanyViewManageJob.html', name=comp_name)
 
 @app.route('/compApproveJobApp', methods=['POST'])
 def compApproveJobApp():
@@ -300,6 +299,11 @@ def compRejectJobApp():
 def filterJobApp():
     active_filter = request.form['filter']
     return redirect(url_for('companyViewApplication', filter=active_filter))
+
+@app.route('/filterJobOpenStatus', methods=['POST'])
+def filterJobOpenStatus():
+    active_filter = request.form['filter']
+    return redirect(url_for('companyViewManageJob', filter=active_filter))
 
 @app.route('/login_company')
 def login_company():
@@ -430,7 +434,7 @@ def manage_company_profile():
         comp_image_file_name_in_s3 = "company/"+"comp-id-" + str(currentCompany) + "_image_file"
         s3 = boto3.client('s3')
         bucket_name = custombucket
-        
+
         try:
             response = s3.generate_presigned_url('get_object',
                                                  Params={'Bucket': bucket_name,

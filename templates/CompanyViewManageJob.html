@@ -45,16 +45,15 @@
 		</h1>
 	</div>
 
-	<!-- <div class="filterStatus">
-			<label for="status">Filter by Status:</label>
-			<select name="status" id="status" style="margin-right: 10px;">
-				<option value="">All</option>
-				<option value="pending">Pending</option>
-				<option value="accepted">Accepted</option>
-				<option value="rejected">Rejected</option>
-			</select>
-			<input type="submit" value="Apply Filter">
-		</div> -->
+	<div class="filterStatus">
+		<form action="/filterJobOpenStatus" autocomplete="on" method="POST" enctype="multipart/form-data">
+			<input type="submit" value="All" name="filter" {% if active_filter=='All' %}class="active" {% endif %}>
+			<input type="submit" value="Opening" name="filter" {% if active_filter=='Opening' %}class="active" {% endif
+				%}>
+			<input type="submit" value="Closed" name="filter" {% if active_filter=='Closed' %}class="active" {%
+				endif %}>
+		</form>
+	</div>
 
 	<fieldset style="margin-left: 50px; margin-right: 50px;">
 		<div class="container">
@@ -106,7 +105,7 @@
 							</tr> -->
 						{% else %}
 						<tr>
-							<td colspan="8" style="text-align: center;">No job published</td>
+							<td colspan="8" style="text-align: center;">No job found</td>
 						</tr>
 						{% endif %}
 					</tbody>
