@@ -174,9 +174,6 @@ def compViewResume():
     return redirect(response)
 
 
-
-
-
 @app.route('/compUpdateJobStatus', methods=['POST'])
 def compUpdateJobStatus():
     job_id = request.form['close_application_button']

@@ -95,6 +95,13 @@ tr {
 
 /* only for viewCompanyApplication */
 
+.viewResumeBtn{
+    border: none;
+    background-color: transparent;
+    color: rgb(8, 0, 255);
+    border-bottom: 0.5px solid rgb(8, 0, 255);
+}
+
 .jobDisplay-table {
     border: 1px solid black;
     text-align: center;
