@@ -8,7 +8,6 @@ import boto3
 import json #important DO NOT REMOVE
 from config import *
 import datetime
-from weasyprint import HTML
 
 app = Flask(__name__)
 app.static_folder = 'static'  # The name of your static folder
